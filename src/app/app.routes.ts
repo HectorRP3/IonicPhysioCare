@@ -6,30 +6,25 @@ export const routes: Routes = [
     loadChildren: () => import('./auth/auth.routes').then((m) => m.authRoutes),
   },
   {
-    path: 'patient',
+    path: 'patients',
     loadChildren: () =>
       import('./patient/patient.routes').then((m) => m.patientRoutes),
   },
   {
-    path: 'physio',
+    path: 'physios',
     loadChildren: () =>
       import('./physio/physio.routes').then((m) => m.physioRoutes),
   },
   {
-    path: 'appointment',
+    path: 'appointments',
     loadChildren: () =>
-      import('./appointment/appointment.routes').then(
+      import('./appointments/appointment.routes').then(
         (m) => m.appointmentRoutes
       ),
   },
   {
     path: '',
-    redirectTo: 'folder/inbox',
+    redirectTo: 'auth/login',
     pathMatch: 'full',
-  },
-  {
-    path: 'folder/:id',
-    loadComponent: () =>
-      import('./folder/folder.page').then((m) => m.FolderPage),
   },
 ];
