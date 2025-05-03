@@ -10,28 +10,34 @@ export class AuthService {
   #logged = signal(false);
 
   #http = inject(HttpClient);
-  
+  rol = signal<string>('');
+  idUser = signal<string>('');
+
   getLogged() {
     return this.#logged.asReadonly();
-  }  
+  }
 
-  login (data: UserLogin): Observable<void> {
+  login(data: UserLogin): Observable<TokenResponse> {
     return this.#http.post<TokenResponse>(`auth/login`, data).pipe(
       // SwitchMap permite trabajar con funciones que devuelven observables o promesas
-      switchMap(async (res) => { // Función async, devuelve promesa (Promise<void>)
+      switchMap(async (res) => {
+        // Función async, devuelve promesa (Promise<void>)
         try {
           await Preferences.set({ key: 'fs-token', value: res.token });
+          await Preferences.set({ key: 'fs-iduser', value: res.id });
+          console.log(res);
           this.#logged.set(true);
+          return res;
         } catch (e) {
-          throw new Error('Can\'t save authentication token in storage!');
+          throw new Error("Can't save authentication token in storage!");
         }
       })
     );
-  }  
+  }
 
-      decodeToken(token: string): any {
-        return JSON.parse(atob(token.split('.')[1]));
-      }  
+  decodeToken(token: string): any {
+    return JSON.parse(atob(token.split('.')[1]));
+  }
 
   async logout(): Promise<void> {
     await Preferences.remove({ key: 'fs-token' });
@@ -39,13 +45,15 @@ export class AuthService {
   }
 
   isLogged(): Observable<boolean> {
-    if (this.#logged()) { // Estamos logueados
+    if (this.#logged()) {
+      // Estamos logueados
       return of(true);
     }
     // from transforma una promesa en un observable
     return from(Preferences.get({ key: 'fs-token' })).pipe(
       switchMap((token) => {
-        if (!token.value) { // No hay token
+        if (!token.value) {
+          // No hay token
           return of(false);
         }
 
@@ -56,8 +64,7 @@ export class AuthService {
           }),
           catchError(() => of(false)) // Token no válido
         );
-      }),
+      })
     );
   }
-
 }

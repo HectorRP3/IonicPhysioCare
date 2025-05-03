@@ -12,19 +12,18 @@ export class AppointmentService {
 
   getAppointmentsPhysio(id: string): Observable<AppointmentsResponse> {
     return this.#http
-      .get<AppointmentsResponse>(
-        `records/${this.#appointmentUrl}/patients/${id}`
-      )
+      .get<AppointmentsResponse>(`records/${this.#appointmentUrl}/physio/${id}`)
       .pipe(
         map((r) => {
-          console.log(r.resultado);
           return r;
         })
       );
   }
   getAppointmentsPatient(id: string): Observable<AppointmentsResponse> {
     return this.#http
-      .get<AppointmentsResponse>(`records/${this.#appointmentUrl}/physio/${id}`)
+      .get<AppointmentsResponse>(
+        `records/${this.#appointmentUrl}/patients/${id}`
+      )
       .pipe(map((r) => r));
   }
 }
