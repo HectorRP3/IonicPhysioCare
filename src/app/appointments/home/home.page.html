@@ -20,8 +20,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-refresher #refresher slot="fixed">
-    <!--Añadir envento ionReferst -->
+  <ion-refresher #refresher slot="fixed" (ionRefresh)="reloadAppointments()">
     <ion-refresher-content> </ion-refresher-content>
   </ion-refresher>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
