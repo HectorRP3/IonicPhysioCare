@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import { Preferences } from '@capacitor/preferences';
 import { IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonListHeader, IonNote, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterOutlet, IonRouterLink } from '@ionic/angular/standalone';
 

@@ -25,6 +25,8 @@ import {
   AlertController,
 } from '@ionic/angular/standalone';
 import { RouterLink } from '@angular/router';
+import { AppointmentService } from '../services/appointment.service';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'home-appointment',
@@ -56,16 +58,26 @@ import { RouterLink } from '@angular/router';
   ],
 })
 export class HomePage {
-  //array
-
-  //service
+  #appointmentService = inject(AppointmentService);
   #navController = inject(NavController);
   #actionSheetCtrl = inject(ActionSheetController);
   #alertCtrl = inject(AlertController);
   order = signal('future');
 
+  ionViewWillEnter() {
+    this.reloadAppointments();
+  }
   reloadAppointments(refresher?: IonRefresher) {
-    //al service get productos
+    this.#appointmentService
+      .getAppointmentsPhysio('67f3fe3996b49b1892b182e4')
+      .subscribe((app) => {
+        console.log(app.resultado);
+        refresher?.complete();
+      });
+  }
+
+  constructor() {
+    this.reloadAppointments();
   }
 
   async showFilters() {
