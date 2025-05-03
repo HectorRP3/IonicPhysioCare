@@ -1,20 +1,7 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
-import {
-  IonApp,
-  IonSplitPane,
-  IonMenu,
-  IonContent,
-  IonList,
-  IonListHeader,
-  IonNote,
-  IonMenuToggle,
-  IonItem,
-  IonIcon,
-  IonLabel,
-  IonRouterOutlet,
-  IonRouterLink,
-} from '@ionic/angular/standalone';
+
+import { Preferences } from '@capacitor/preferences';
+import { IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonListHeader, IonNote, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterOutlet, IonRouterLink } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-root',
@@ -28,16 +15,19 @@ import {
     IonList,
     IonListHeader,
     IonNote,
-    IonRouterOutlet,
-  ],
+    IonRouterOutlet
+],
 })
 export class AppComponent {
-  // menuEnabled = false;
-  // constructor() {
-  //   this.checkToken();
-  // }
-  // async checkToken() {
-  //   const { value } = await Preferences.get({ key: 'token' });
-  //   this.menuEnabled = !!value;
-  // }
+  menuEnabled = false;
+
+  constructor() {
+    this.checkToken();
+  }
+
+  async checkToken() {
+    const { value } = await Preferences.get({ key: 'token' });
+    this.menuEnabled = !!value;
+
+  }
 }
