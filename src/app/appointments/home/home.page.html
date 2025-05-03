@@ -33,14 +33,18 @@
     </ion-fab-button>
   </ion-fab>
   <ion-list style="padding-bottom: 50px">
-    <!-- @for (appointment of appointments(); track appointment.id) {
-    } -->
+    @for (appointment of appointments(); track appointment._id) {
+    <appointment-card
+      [appointment]="appointment"
+      [rol]="role"
+    ></appointment-card>
+    }
   </ion-list>
-  <ion-infinite-scroll #infinite>
+  <!-- <ion-infinite-scroll #infinite>
     <ion-infinite-scroll-content
       loadingSpinner="bubbles"
       loadingText="Loading more events..."
     >
     </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+  </ion-infinite-scroll> -->
 </ion-content>

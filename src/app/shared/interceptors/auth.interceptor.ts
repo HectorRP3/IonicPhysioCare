@@ -12,12 +12,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       }
 
       const authReq = req.clone({
-        //headers: req.headers.set('Authorization', `bearer ${token.value}`),
-        headers: req.headers.set(
-          'Authorization',
-          'Bearer ' +
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImhlY3RvcjMiLCJyb2wiOiJwaHlzaW8iLCJpYXQiOjE3NDYyOTMxNTcsImV4cCI6MTc0NjI5MzIxN30.pI2a48-Qer3CKJeD7lAYvynYP-G6SoKuQ0Q94ToD8CA'
-        ),
+        headers: req.headers.set('Authorization', `Bearer ${token.value}`),
       });
       // Enviamos la petición clonada con el token
       return next(authReq);

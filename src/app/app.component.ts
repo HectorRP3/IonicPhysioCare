@@ -1,7 +1,56 @@
 import { Component } from '@angular/core';
 
 import { Preferences } from '@capacitor/preferences';
-import { IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonListHeader, IonNote, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterOutlet, IonRouterLink } from '@ionic/angular/standalone';
+import {
+  IonApp,
+  IonSplitPane,
+  IonMenu,
+  IonContent,
+  IonList,
+  IonListHeader,
+  IonNote,
+  IonMenuToggle,
+  IonItem,
+  IonIcon,
+  IonLabel,
+  IonRouterOutlet,
+  IonRouterLink,
+} from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import {
+  home,
+  logIn,
+  documentText,
+  checkmarkCircle,
+  images,
+  camera,
+  arrowUndoCircle,
+  planet,
+  eye,
+  eyeOff,
+  exit,
+  add,
+  trash,
+  pencil,
+  ellipsisHorizontal,
+  people,
+  search,
+  compass,
+  close,
+  informationCircle,
+  chatboxEllipses,
+  navigate,
+  thumbsUp,
+  thumbsDown,
+  person,
+  logoGoogle,
+  logoFacebook,
+  map,
+  card,
+  golf,
+  colorWand,
+  clipboard,
+} from 'ionicons/icons';
 
 @Component({
   selector: 'app-root',
@@ -15,19 +64,53 @@ import { IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonListHeader, IonN
     IonList,
     IonListHeader,
     IonNote,
-    IonRouterOutlet
-],
+    IonRouterOutlet,
+  ],
 })
 export class AppComponent {
   menuEnabled = false;
 
   constructor() {
+    addIcons({
+      planet,
+      home,
+      logIn,
+      documentText,
+      checkmarkCircle,
+      images,
+      camera,
+      arrowUndoCircle,
+      eye,
+      eyeOff,
+      exit,
+      add,
+      trash,
+      pencil,
+      ellipsisHorizontal,
+      people,
+      search,
+      compass,
+      close,
+      informationCircle,
+      chatboxEllipses,
+      navigate,
+      thumbsUp,
+      thumbsDown,
+      person,
+      logoGoogle,
+      logoFacebook,
+      map,
+      card,
+      golf,
+      colorWand,
+      clipboard,
+    });
+
     this.checkToken();
   }
 
   async checkToken() {
     const { value } = await Preferences.get({ key: 'token' });
     this.menuEnabled = !!value;
-
   }
 }
