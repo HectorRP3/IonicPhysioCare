@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Physio Selection</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-list-header color="light">
+      Hello {{ name }}, pick a physio
+    </ion-list-header>
+    <!-- [(ngModel)]= -->
+    <ion-radio-group [(ngModel)]="physioid">
+      @for(physio of physiosList.value()?.resultado; track $index) {
+      <ion-item>
+        <ion-label>{{ physio.name }}</ion-label>
+        <ion-radio
+          slot="start"
+          value="{{ physio._id }}"
+          color="primary"
+        ></ion-radio>
+      </ion-item>
+      }
+    </ion-radio-group>
+  </ion-list>
+  <ion-button color="success" expand="block" (click)="choosedPhysio()">
+    <ion-label>Choose physio</ion-label>
+  </ion-button>
+</ion-content>

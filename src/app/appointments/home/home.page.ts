@@ -1,6 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
+  ModalController,
   IonRouterLink,
   IonHeader,
   IonToolbar,
@@ -19,6 +20,7 @@ import {
   IonButton,
   IonCol,
   IonRow,
+  ToastController,
   IonGrid,
   NavController,
   ActionSheetController,
@@ -31,6 +33,7 @@ import { Appointment } from '../interfaces/appointment';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Preferences } from '@capacitor/preferences';
 import { AppointmentCardComponent } from '../appointment-card/appointment-card.component';
+import { PhysioSelectionComponent } from 'src/app/shared/modal/physio-selection/physio-selection.component';
 
 @Component({
   selector: 'home-appointment',
@@ -69,11 +72,15 @@ export class HomePage {
   order = signal('future');
   appointments = signal<Appointment[]>([]);
   role = '';
+  #modalCtrl = inject(ModalController);
+  name = '';
+  #toastCtrl = inject(ToastController);
 
   ionViewWillEnter() {
     this.reloadAppointments();
   }
   async reloadAppointments(refresher?: IonRefresher) {
+    this.appointments.set([]);
     const { value: idUser } = await Preferences.get({ key: 'fs-iduser' });
     const { value: token } = await Preferences.get({ key: 'fs-token' });
     console.log('Token guardado:', token);
@@ -82,18 +89,26 @@ export class HomePage {
       return;
     }
     this.role = this.#authService.decodeToken(token).rol;
+    this.name = this.#authService.decodeToken(token).login;
     console.log('Rol decodificado:', this.role);
     if (this.role == 'patient') {
       this.#appointmentService
-        .getAppointmentsPatient(idUser!.toString())
+        .getAppointmentsPatient(idUser!.toString(), this.order())
         .subscribe((app) => {
-          console.log(app.resultado);
-          this.appointments.set(app.resultado);
+          if (app.resultado.length === 0) {
+            this.showToast(
+              'No appointments found. Please create a new appointment.'
+            );
+          } else {
+            console.log(app.resultado);
+            this.appointments.set(app.resultado);
+          }
+
           refresher?.complete();
         });
     } else {
       this.#appointmentService
-        .getAppointmentsPhysio(idUser!.toString())
+        .getAppointmentsPhysio(idUser!.toString(), this.order())
         .subscribe((app) => {
           console.log(app.resultado);
           this.appointments.set(app.resultado);
@@ -125,7 +140,14 @@ export class HomePage {
 
     const result = await alert.onDidDismiss();
     if (result.data && result.role !== 'cancel') {
-      this.order.set(result.data.values);
+      // this.order.set(result.data.values);
+      // this.reloadAppointments();
+      if (result.data.values === 'future') {
+        this.order.set('future');
+      }
+      if (result.data.values === 'past') {
+        this.order.set('past');
+      }
       this.reloadAppointments();
     }
   }
@@ -162,5 +184,44 @@ export class HomePage {
       ],
     });
     actSheet.present();
+  }
+
+  deleteAppointment(appointment: Appointment) {
+    this.appointments.update((appointments) =>
+      appointments.filter((a) => a._id !== appointment._id)
+    );
+  }
+
+  async openModal() {
+    const modal = await this.#modalCtrl.create({
+      component: PhysioSelectionComponent,
+      componentProps: { name: this.name },
+    });
+    await modal.present();
+    const result = await modal.onDidDismiss();
+    if (result.data) {
+      console.log('Physio selected:', result.data.physio);
+      this.#navController.navigateForward('/appointments/add', {
+        queryParams: { physioId: result.data.physio },
+        animated: true,
+        animationDirection: 'forward',
+      });
+    }
+  }
+
+  async showToast(message: string) {
+    const toast = await this.#toastCtrl.create({
+      message: message,
+      duration: 4000,
+      position: 'bottom',
+      color: 'danger',
+      buttons: [
+        {
+          icon: 'close-circle',
+          role: 'cancel',
+        },
+      ],
+    });
+    await toast.present();
   }
 }

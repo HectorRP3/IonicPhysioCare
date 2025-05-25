@@ -10,20 +10,42 @@ export class AppointmentService {
   #appointmentUrl = 'appointments';
   #http = inject(HttpClient);
 
-  getAppointmentsPhysio(id: string): Observable<AppointmentsResponse> {
+  getAppointmentsPhysio(
+    id: string,
+    filtro: string = 'future'
+  ): Observable<AppointmentsResponse> {
+    let urlParams;
+    urlParams = new URLSearchParams({
+      filter: filtro,
+    });
     return this.#http
-      .get<AppointmentsResponse>(`records/${this.#appointmentUrl}/physio/${id}`)
+      .get<AppointmentsResponse>(
+        `records/${this.#appointmentUrl}/physio/${id}?${urlParams}`
+      )
       .pipe(
         map((r) => {
           return r;
         })
       );
   }
-  getAppointmentsPatient(id: string): Observable<AppointmentsResponse> {
+  getAppointmentsPatient(
+    id: string,
+    filtro: string = 'future'
+  ): Observable<AppointmentsResponse> {
+    let urlParams;
+    urlParams = new URLSearchParams({
+      filter: filtro,
+    });
     return this.#http
       .get<AppointmentsResponse>(
-        `records/${this.#appointmentUrl}/patients/${id}`
+        `records/${this.#appointmentUrl}/patients/${id}?${urlParams}`
       )
+      .pipe(map((r) => r));
+  }
+
+  deleteAppointment(id: string): Observable<void> {
+    return this.#http
+      .delete<void>(`records/${this.#appointmentUrl}/${id}`)
       .pipe(map((r) => r));
   }
 }

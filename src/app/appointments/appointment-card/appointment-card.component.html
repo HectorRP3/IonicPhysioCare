@@ -4,10 +4,23 @@
       <ion-col>
         <ion-chip [routerLink]="['/physio', appointment().physio]">
           <ion-avatar>
-            <!-- <ion-img src="{{ event().creator.avatar }}" alt="{{ event().creator.name }}"></ion-img> -->
+            @if(rol() == "physio") {
+            <!-- aqui va lo del patient lo hace olex -->
+            <!-- {{ ().physio }} -->
+            } @else {
+            <ion-img
+              src="{{ physio()?.avatar }}"
+              alt="{{ physio()?.name }}"
+            ></ion-img>
+            }
           </ion-avatar>
           <ion-label>
-            <!-- <p>{{ event().creator.name }}</p> -->
+            @if(rol() == "physio") {
+            <!-- aqui va lo del patient lo hace olex -->
+            <!-- {{ ().physio }} -->
+            } @else {
+            {{ physio()?.name }}
+            }
           </ion-label>
         </ion-chip>
       </ion-col>
@@ -55,6 +68,12 @@
         <ion-label
           ><strong>Observations:</strong>
           {{ appointment().observations }}</ion-label
+        >
+      </ion-item>
+      <ion-item>
+        <ion-icon name="checkmark" slot="start"></ion-icon>
+        <ion-label
+          ><strong>Status :</strong> {{ appointment().status }}</ion-label
         >
       </ion-item>
     </ion-list>

@@ -50,6 +50,7 @@ import {
   golf,
   colorWand,
   clipboard,
+  checkmark,
 } from 'ionicons/icons';
 
 @Component({
@@ -104,6 +105,7 @@ export class AppComponent {
       golf,
       colorWand,
       clipboard,
+      checkmark,
     });
 
     this.checkToken();
