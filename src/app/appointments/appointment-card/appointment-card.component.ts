@@ -74,7 +74,6 @@ import { PhysioSelectionComponent } from 'src/app/shared/modal/physio-selection/
 })
 export class AppointmentCardComponent {
   appointment = input.required<Appointment>();
-  // deleted = output<void>();
   #alertController = inject(AlertController);
   #toastCtrl = inject(ToastController);
   #navCtrl = inject(NavController);
@@ -85,7 +84,6 @@ export class AppointmentCardComponent {
   #physioService = inject(PhysioService);
   physio = signal<Phsyio | null>(null);
   token: string | null = '';
-  #destroyRef = inject(DestroyRef);
   deleted = output<void>();
 
   // patient = signal<Patient | undefined>(undefined);
@@ -116,7 +114,7 @@ export class AppointmentCardComponent {
       } else {
         console.log('physio');
         this.#physioService
-          .getPhysioById(this.appointment().physio)
+          .getPhysioById(this.appointment().physio!)
           .subscribe((res) => {
             console.log(res.resultado);
             this.physio.update(() => {

@@ -26,7 +26,7 @@ import {
   ActionSheetController,
   AlertController,
 } from '@ionic/angular/standalone';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AppointmentService } from '../services/appointment.service';
 import { map } from 'rxjs';
 import { Appointment } from '../interfaces/appointment';
@@ -75,6 +75,7 @@ export class HomePage {
   #modalCtrl = inject(ModalController);
   name = '';
   #toastCtrl = inject(ToastController);
+  #router = inject(Router);
 
   ionViewWillEnter() {
     this.reloadAppointments();
@@ -140,8 +141,6 @@ export class HomePage {
 
     const result = await alert.onDidDismiss();
     if (result.data && result.role !== 'cancel') {
-      // this.order.set(result.data.values);
-      // this.reloadAppointments();
       if (result.data.values === 'future') {
         this.order.set('future');
       }
@@ -150,40 +149,6 @@ export class HomePage {
       }
       this.reloadAppointments();
     }
-  }
-
-  async showOptionsAppointment() {
-    //(APPOINTEMNT : APPOINTMENT)
-    const actSheet = await this.#actionSheetCtrl.create({
-      header: 'apppointment.description',
-      buttons: [
-        {
-          text: 'Delete',
-          role: 'destructive',
-          icon: 'trash',
-          handler: () => {
-            // this.#productsService
-            //   .deleteProduct(prod.id!)
-            //   .subscribe(() =>
-            //     this.products.update(prods => prods.filter(p => p !== prod))
-            //   );
-          },
-        },
-        {
-          text: 'See details',
-          icon: 'eye',
-          handler: () => {
-            // this.#navController.navigateForward(['/products', prod.id]);
-          },
-        },
-        {
-          text: 'Cancel',
-          icon: 'close',
-          role: 'cancel',
-        },
-      ],
-    });
-    actSheet.present();
   }
 
   deleteAppointment(appointment: Appointment) {
@@ -199,12 +164,13 @@ export class HomePage {
     });
     await modal.present();
     const result = await modal.onDidDismiss();
-    if (result.data) {
+    if (result.data && result.data.physio) {
       console.log('Physio selected:', result.data.physio);
-      this.#navController.navigateForward('/appointments/add', {
+      // this.#navController.navigateForward('/appointments/add', {
+      //   queryParams: { physioId: result.data.physio },
+      // });
+      this.#router.navigate(['/appointments/add'], {
         queryParams: { physioId: result.data.physio },
-        animated: true,
-        animationDirection: 'forward',
       });
     }
   }

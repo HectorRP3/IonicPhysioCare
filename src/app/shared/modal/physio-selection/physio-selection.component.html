@@ -15,7 +15,12 @@
     </ion-list-header>
     <!-- [(ngModel)]= -->
     <ion-radio-group [(ngModel)]="physioid">
-      @for(physio of physiosList.value()?.resultado; track $index) {
+      @if(physiosList.isLoading()){
+      <ion-item>
+        <ion-spinner name="crescent" slot="start"></ion-spinner>
+        <ion-label>Loading physios...</ion-label>
+      </ion-item>
+      }@else {@for(physio of physiosList.value()?.resultado; track $index) {
       <ion-item>
         <ion-label>{{ physio.name }}</ion-label>
         <ion-radio
@@ -24,10 +29,10 @@
           color="primary"
         ></ion-radio>
       </ion-item>
-      }
+      }}
     </ion-radio-group>
   </ion-list>
-  <ion-button color="success" expand="block" (click)="choosedPhysio()">
+  <ion-button color="primary" expand="block" (click)="choosedPhysio()">
     <ion-label>Choose physio</ion-label>
   </ion-button>
 </ion-content>

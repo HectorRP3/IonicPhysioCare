@@ -2,6 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { AppointmentsResponse } from '../interfaces/response';
+import { AppointmentInsert } from '../interfaces/appointment';
+import {
+  Record2,
+  SingleRecordsResponse,
+} from 'src/app/shared/interfaces/Records';
 
 @Injectable({
   providedIn: 'root',
@@ -43,10 +48,29 @@ export class AppointmentService {
       .pipe(map((r) => r));
   }
 
+  createAppointment(
+    appointment: AppointmentInsert,
+    idRecord: string
+  ): Observable<Record2> {
+    return this.#http
+      .post<Record2>(`records/${this.#appointmentUrl}/${idRecord}`, appointment)
+      .pipe(map((r) => r));
+  }
+
   deleteAppointment(id: string): Observable<void> {
     return this.#http
       .delete<void>(`records/${this.#appointmentUrl}/${id}`)
       .pipe(map((r) => r));
+  }
+
+  getRecordByIdPatient(id: string): Observable<SingleRecordsResponse> {
+    console.log(id);
+    return this.#http.get<SingleRecordsResponse>(`records/patient/${id}`).pipe(
+      map((r) => {
+        console.log(r);
+        return r;
+      })
+    );
   }
 }
 // /records/appointments/physio/67f7ca7d675fb455abf5ad99

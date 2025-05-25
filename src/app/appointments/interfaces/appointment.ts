@@ -1,6 +1,6 @@
 export interface AppointmentInsert {
   date?: string;
-  physio: string;
+  physio?: string;
   diagnosis?: string;
   treatment?: string;
   observations?: string;

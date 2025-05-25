@@ -53,27 +53,30 @@
       <ion-item>
         <ion-icon name="pencil" slot="start"></ion-icon>
         <ion-label
-          ><strong>Diagnosis:</strong> {{ appointment().diagnosis }}</ion-label
+          ><strong>Diagnosis:</strong>
+          {{ appointment().diagnosis ?? "Por completar" }}</ion-label
         >
         <!-- <ion-label>{{ appointment().distance }} km</ion-label> -->
       </ion-item>
       <ion-item>
         <ion-icon name="clipboard" slot="start"></ion-icon>
         <ion-label
-          ><strong>Treatment:</strong> {{ appointment().treatment }}</ion-label
+          ><strong>Treatment:</strong>
+          {{ appointment().treatment ?? "Por Completar" }}</ion-label
         >
       </ion-item>
       <ion-item>
         <ion-icon name="eye" slot="start"></ion-icon>
         <ion-label
           ><strong>Observations:</strong>
-          {{ appointment().observations }}</ion-label
+          {{ appointment().observations ?? "Por Completar" }}</ion-label
         >
       </ion-item>
       <ion-item>
         <ion-icon name="checkmark" slot="start"></ion-icon>
         <ion-label
-          ><strong>Status :</strong> {{ appointment().status }}</ion-label
+          ><strong>Status :</strong>
+          {{ appointment().status ?? "Por Completar" }}</ion-label
         >
       </ion-item>
     </ion-list>
