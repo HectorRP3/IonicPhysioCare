@@ -1,4 +1,10 @@
-import { Component, inject, input, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  input,
+  OnInit,
+} from '@angular/core';
 import {
   ModalController,
   IonHeader,
@@ -14,6 +20,7 @@ import {
   IonLabel,
   IonItem,
   IonRadio,
+  IonSpinner,
 } from '@ionic/angular/standalone';
 
 import { rxResource } from '@angular/core/rxjs-interop';
@@ -23,6 +30,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'physio-selection',
   templateUrl: './physio-selection.component.html',
   styleUrls: ['./physio-selection.component.scss'],
+
   imports: [
     FormsModule,
     IonHeader,
@@ -38,6 +46,7 @@ import { FormsModule } from '@angular/forms';
     IonLabel,
     IonItem,
     IonRadio,
+    IonSpinner,
   ],
 })
 export class PhysioSelectionComponent {
