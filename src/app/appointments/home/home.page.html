@@ -23,20 +23,22 @@
   <ion-refresher #refresher slot="fixed" (ionRefresh)="reloadAppointments()">
     <ion-refresher-content> </ion-refresher-content>
   </ion-refresher>
+  @if(role == "patient") {
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button
-      color="secondary"
-      [routerLink]="['/appointments/add']"
-      [routerDirection]="'root'"
-    >
+    <ion-fab-button color="secondary" (click)="openModal()">
+      <!-- [routerLink]="['/appointments/add']"
+      [routerDirection]="'root'" -->
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+  }
+
   <ion-list style="padding-bottom: 50px">
     @for (appointment of appointments(); track appointment._id) {
     <appointment-card
       [appointment]="appointment"
       [rol]="role"
+      (deleted)="deleteAppointment(appointment)"
     ></appointment-card>
     }
   </ion-list>
