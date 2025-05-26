@@ -86,9 +86,10 @@ export class HomePage {
     const { value: token } = await Preferences.get({ key: 'fs-token' });
     console.log('Token guardado:', token);
     if (!token) {
-      // SACAR MENSAJE DE ALERT Y REDIRIGIR AL LOGIN
+      // TODO SACAR MENSAJE DE ALERT Y REDIRIGIR AL LOGIN
       return;
     }
+    refresher?.complete();
     this.role = this.#authService.decodeToken(token).rol;
     this.name = this.#authService.decodeToken(token).login;
     console.log('Rol decodificado:', this.role);
@@ -116,6 +117,7 @@ export class HomePage {
           refresher?.complete();
         });
     }
+    refresher?.complete();
   }
 
   async showFilters() {
@@ -154,6 +156,15 @@ export class HomePage {
   deleteAppointment(appointment: Appointment) {
     this.appointments.update((appointments) =>
       appointments.filter((a) => a._id !== appointment._id)
+    );
+  }
+
+  updateAppointment(appointment: Appointment) {
+    console.log(appointment);
+    this.appointments.update((appointments) =>
+      appointments.map((a) =>
+        a._id === appointment._id ? { ...a, ...appointment } : a
+      )
     );
   }
 

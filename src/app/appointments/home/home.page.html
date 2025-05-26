@@ -20,14 +20,16 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-refresher #refresher slot="fixed" (ionRefresh)="reloadAppointments()">
+  <ion-refresher
+    #refresher
+    slot="fixed"
+    (ionRefresh)="reloadAppointments(refresher)"
+  >
     <ion-refresher-content> </ion-refresher-content>
   </ion-refresher>
   @if(role == "patient") {
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button color="secondary" (click)="openModal()">
-      <!-- [routerLink]="['/appointments/add']"
-      [routerDirection]="'root'" -->
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
@@ -39,14 +41,8 @@
       [appointment]="appointment"
       [rol]="role"
       (deleted)="deleteAppointment(appointment)"
+      (update)="updateAppointment($event)"
     ></appointment-card>
     }
   </ion-list>
-  <!-- <ion-infinite-scroll #infinite>
-    <ion-infinite-scroll-content
-      loadingSpinner="bubbles"
-      loadingText="Loading more events..."
-    >
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll> -->
 </ion-content>
