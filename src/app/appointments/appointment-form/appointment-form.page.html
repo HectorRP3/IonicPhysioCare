@@ -11,13 +11,15 @@
   <form [formGroup]="appointmentForm" (ngSubmit)="addAppointment()">
     <ion-item>
       <ion-label position="floating" for="date">Date</ion-label>
-      <ion-input
-        type="date"
-        label="Date"
+      <ion-datetime
+        displayFormat="DD/MM/YYYY"
         name="date"
-        labelPlacement="floating"
         formControlName="date"
-      ></ion-input>
+      />
+      @let descErrors = appointmentForm.get('date')?.errors;
+      @if(descErrors?.['required']) {
+      <div class="invalid-feedback">El date es obligatoria</div>
+      } {{mensaje}}
     </ion-item>
     <ion-button
       expand="full"

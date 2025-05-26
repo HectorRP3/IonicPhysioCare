@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 import { Preferences } from '@capacitor/preferences';
 import {
@@ -15,6 +16,12 @@ import {
   IonLabel,
   IonRouterOutlet,
   IonRouterLink,
+  IonAvatar,
+  IonImg,
+  IonButton,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {
@@ -58,19 +65,39 @@ import {
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
   imports: [
+    RouterLink,
+    RouterLinkActive,
+    IonRouterLink,
     IonApp,
     IonSplitPane,
     IonMenu,
     IonContent,
     IonList,
+    IonMenuToggle,
+    IonItem,
+    IonIcon,
+    IonLabel,
+    IonRouterOutlet,
+    IonAvatar,
+    IonImg,
+    IonButton,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
     IonListHeader,
     IonNote,
-    IonRouterOutlet,
+    IonIcon,
+    IonMenuToggle,
+    IonItem,
   ],
 })
 export class AppComponent {
   menuEnabled = false;
-
+  public appPages = [
+    { title: 'Appointments', url: '/appointments', icon: 'pencil' },
+    // { title: 'New event', url: '/events/add', icon: 'add' },
+    // { title: 'My profile', url: '/profile/me', icon: 'person' },
+  ];
   constructor() {
     addIcons({
       planet,

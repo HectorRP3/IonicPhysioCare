@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Edit appointment</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-list-header color="light">
+      Fill in the form to edit the appointment
+    </ion-list-header>
+    <form [formGroup]="appointmentForm">
+      <ion-item>
+        <ion-label position="floating">Status</ion-label>
+        <ion-select name="status" formControlName="status">
+          <ion-select-option value="completed">Completed</ion-select-option>
+          <ion-select-option value="cancelled">Cancelled</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Treatment</ion-label>
+        <ion-input
+          id="treatment"
+          type="text"
+          formControlName="treatment"
+          name="treatment"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating" for="diagnosis">Diagnosis</ion-label>
+        <ion-input
+          id="diagnosis"
+          type="text"
+          formControlName="diagnosis"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating" for="observations"
+          >Observations</ion-label
+        >
+        <ion-textarea
+          id="observations"
+          formControlName="observations"
+        ></ion-textarea>
+      </ion-item>
+    </form>
+  </ion-list>
+  <ion-button color="primary" expand="block" (click)="editAppointment()">
+    <ion-label>Edit appointment</ion-label>
+  </ion-button>
+</ion-content>

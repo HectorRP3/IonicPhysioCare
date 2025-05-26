@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { AppointmentsResponse } from '../interfaces/response';
-import { AppointmentInsert } from '../interfaces/appointment';
+import { Appointment, AppointmentInsert } from '../interfaces/appointment';
 import {
   Record2,
   SingleRecordsResponse,
@@ -54,6 +54,15 @@ export class AppointmentService {
   ): Observable<Record2> {
     return this.#http
       .post<Record2>(`records/${this.#appointmentUrl}/${idRecord}`, appointment)
+      .pipe(map((r) => r));
+  }
+
+  updateAppointment(appointment: Appointment): Observable<Record2> {
+    return this.#http
+      .put<Record2>(
+        `records/${this.#appointmentUrl}/${appointment._id}`,
+        appointment
+      )
       .pipe(map((r) => r));
   }
 

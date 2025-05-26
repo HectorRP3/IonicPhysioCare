@@ -1,24 +1,45 @@
 <ion-app>
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay">
+      <!-- @if (user()) {
+      <ion-item color="tertiary">
+        <ion-avatar slot="start" [routerLink]="['/profile/me']">
+          <ion-img [src]="user()!.avatar"></ion-img>
+        </ion-avatar>
+        <ion-label>
+          <h3>{{ user()!.name }}</h3>
+          <p>{{ user()!.email }}</p>
+        </ion-label>
+        <ion-button color="light" (click)="logout()">
+          <small>Logout</small>
+          <ion-icon slot="end" name="exit"></ion-icon>
+        </ion-button>
+      </ion-item>
+      } -->
       <ion-content>
-        <ion-list id="inbox-list">
-          <ion-list-header>Inbox</ion-list-header>
-          <ion-note>hi&#64;ionicframework.com</ion-note>
-
-          
-        </ion-list>
-
-        <ion-list id="labels-list">
-          <ion-list-header>Labels</ion-list-header>
-
-          
+        <ion-list>
+          @for (p of appPages; track $index) {
+          {{ p.title }};
+          <ion-menu-toggle auto-hide="false">
+            <ion-item
+              routerDirection="root"
+              [routerLink]="[p.url]"
+              lines="none"
+              detail="false"
+              routerLinkActive="selected"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              <ion-icon
+                aria-hidden="true"
+                slot="start"
+                [name]="p.icon"
+              ></ion-icon>
+              <ion-label>{{ p.title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          }
         </ion-list>
       </ion-content>
-    </ion-menu>
-
-    <ion-menu side="start" menuId="main" [disabled]="!menuEnabled">
-      <!-- contenido del menú -->
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>
   </ion-split-pane>

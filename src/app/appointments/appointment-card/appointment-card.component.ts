@@ -13,6 +13,7 @@ import {
 import { rxResource } from '@angular/core/rxjs-interop';
 import { Appointment } from '../interfaces/appointment';
 import {
+  ModalController,
   IonCard,
   IonCardTitle,
   IonCardContent,
@@ -45,6 +46,7 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { PhysioService } from 'src/app/physio/services/physio.service';
 import { map, tap } from 'rxjs';
 import { PhysioSelectionComponent } from 'src/app/shared/modal/physio-selection/physio-selection.component';
+import { AppointmentEditComponent } from '../modal/appointment-edit/appointment-edit.component';
 
 @Component({
   selector: 'appointment-card',
@@ -85,17 +87,10 @@ export class AppointmentCardComponent {
   physio = signal<Phsyio | null>(null);
   token: string | null = '';
   deleted = output<void>();
+  update = output<Appointment>();
+  #modalCtrl = inject(ModalController);
 
   // patient = signal<Patient | undefined>(undefined);
-
-  // physio = rxResource({
-  //   request: () => this.appointment().physio,
-  //   loader: async ({ request: id }: { request: string }) => {},
-  // });
-  // patient = rxResource({
-  //   request: () => this.appointment().patient,
-  //   loader: async ({ request: id }: { request: string }) => {},
-  // });
 
   constructor() {
     afterNextRender(() => {
@@ -146,11 +141,7 @@ export class AppointmentCardComponent {
           text: 'Edit',
           icon: 'pencil',
           handler: () => {
-            this.#navCtrl.navigateRoot([
-              '/events',
-              this.appointment()._id,
-              'edit',
-            ]);
+            this.openModal();
           },
         },
         {
@@ -178,30 +169,24 @@ export class AppointmentCardComponent {
         .deleteAppointment(this.appointment()._id)
         .subscribe({
           next: () => {
-            this.showToast('The physio has been removed!');
+            this.showToast('The physio has been removed!', 'success');
             this.deleted.emit();
           },
           error: () =>
-            this.showToast('The physio could not be removed at this moment'),
+            this.showToast(
+              'The physio could not be removed at this moment',
+              'danger'
+            ),
         });
-
-      // this.#eventsService.deleteEvent(this.event().id)
-      // .subscribe({
-      //   next: () => {
-      //     this.deleted.emit();
-      //     this.showToast("The event has been removed!")
-      //   },
-      //   error: () => this.showToast("The event could not be removed at this moment")
-      // })
     }
   }
 
-  async showToast(message: string) {
+  async showToast(message: string, color: 'success' | 'danger' = 'success') {
     const toast = await this.#toastCtrl.create({
       message: message,
       duration: 4000,
       position: 'bottom',
-      color: 'danger',
+      color: color,
       buttons: [
         {
           icon: 'close-circle',
@@ -210,5 +195,39 @@ export class AppointmentCardComponent {
       ],
     });
     await toast.present();
+  }
+
+  async openModal() {
+    console.log(this.appointment());
+    const modal = await this.#modalCtrl.create({
+      component: AppointmentEditComponent,
+      componentProps: {
+        date: this.appointment().date,
+        physioId: this.appointment().physio,
+        patientId: this.appointment().patient,
+        status: this.appointment().status,
+        treatment: this.appointment().treatment,
+        diagnosis: this.appointment().diagnosis,
+        observations: this.appointment().observations,
+        appointmentId: this.appointment()._id,
+      },
+    });
+    await modal.present();
+    const result = await modal.onDidDismiss();
+    if (result.data && result.data.appointment) {
+      console.log('Physio selected:', result.data.appointment);
+      this.#appointmentService
+        .updateAppointment(result.data.appointment)
+        .subscribe({
+          next: (response) => {
+            console.log('Appointment updated successfully:', response);
+            this.showToast('Appointment updated successfully!', 'success');
+            this.update.emit(result.data.appointment);
+          },
+          error: (error) => {
+            console.error('Error updating appointment:', error);
+          },
+        });
+    }
   }
 }
