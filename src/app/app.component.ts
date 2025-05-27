@@ -1,5 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { ToastController, NavController } from '@ionic/angular/standalone';
+import { Platform } from '@ionic/angular';
+import {
+  ActionPerformed,
+  PushNotificationSchema,
+  PushNotifications,
+} from '@capacitor/push-notifications';
 
 import { Preferences } from '@capacitor/preferences';
 import {
@@ -98,6 +105,9 @@ export class AppComponent {
     // { title: 'New event', url: '/events/add', icon: 'add' },
     // { title: 'My profile', url: '/profile/me', icon: 'person' },
   ];
+  #platform = inject(Platform);
+  #nav = inject(NavController);
+  #toast = inject(ToastController);
   constructor() {
     addIcons({
       planet,
@@ -141,5 +151,43 @@ export class AppComponent {
   async checkToken() {
     const { value } = await Preferences.get({ key: 'token' });
     this.menuEnabled = !!value;
+  }
+
+  async initializeApp() {
+    if (this.#platform.is('capacitor')) {
+      //...
+
+      const res = await PushNotifications.checkPermissions();
+      if (res.receive !== 'granted') {
+        await PushNotifications.requestPermissions();
+      }
+
+      // Show us the notification payload if the app is open on our device
+      PushNotifications.addListener(
+        'pushNotificationReceived',
+        async (notification: PushNotificationSchema) => {
+          const toast = await this.#toast.create({
+            header: notification.title,
+            message: notification.body,
+            duration: 3000,
+          });
+          await toast.present();
+        }
+      );
+
+      // Method called when tapping on a notification
+      PushNotifications.addListener(
+        'pushNotificationActionPerformed',
+        (notification: ActionPerformed) => {
+          if (notification.notification.data.prodId) {
+            this.#nav.navigateRoot([
+              '/products',
+              notification.notification.data.prodId,
+              'comments',
+            ]);
+          }
+        }
+      );
+    }
   }
 }
