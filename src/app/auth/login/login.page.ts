@@ -9,8 +9,9 @@ import {
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, Platform } from '@ionic/angular';
 import { Preferences } from '@capacitor/preferences';
+import { PushNotifications, Token } from '@capacitor/push-notifications';
 
 @Component({
   selector: 'app-login',
@@ -22,14 +23,32 @@ export class LoginPage {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
+  #platform = inject(Platform);
+  firebaseToken?: string;
 
   loginForm: FormGroup = this.fb.group({
     login: ['', [Validators.required, Validators.email]], // CAMBIO
     password: ['', Validators.required],
   });
 
+  constructor() {
+    console.log(this.#platform.is('mobile'));
+    if (this.#platform.is('mobile')) {
+      PushNotifications.register();
+
+      // On success, we should be able to receive notifications
+      PushNotifications.addListener('registration', (token: Token) => {
+        this.firebaseToken = token.value;
+      });
+    }
+  }
+
   login() {
-    const data = this.loginForm.value;
+    const data = {
+      login: this.loginForm.value.login,
+      password: this.loginForm.value.password,
+      firebaseToken: this.firebaseToken, // Agregar el token de Firebase
+    };
     console.log('Datos enviados:', data);
 
     this.authService.login(data).subscribe({
