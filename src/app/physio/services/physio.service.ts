@@ -11,13 +11,26 @@ export class PhysioService {
   #physioUrl = 'physios';
   #http = inject(HttpClient);
 
-  getPhysios(): Observable<PhsyioResponse> {
-    return this.#http.get<PhsyioResponse>(this.#physioUrl).pipe(map((r) => r));
+  getPhysios(search: String = ''): Observable<PhsyioResponse> {
+    let params;
+    if (search) {
+      params = new URLSearchParams({ filter: search.toString() });
+    }
+    console.log(`${this.#physioUrl}?${params}`);
+    return this.#http
+      .get<PhsyioResponse>(`${this.#physioUrl}?${params}`)
+      .pipe(map((r) => r));
   }
 
   getPhysioById(id: String): Observable<SinglePhsyioResponse> {
     return this.#http
       .get<SinglePhsyioResponse>(`${this.#physioUrl}/${id}`)
+      .pipe(map((r) => r));
+  }
+
+  deletePhysio(id: String): Observable<SinglePhsyioResponse> {
+    return this.#http
+      .delete<SinglePhsyioResponse>(`${this.#physioUrl}/${id}`)
       .pipe(map((r) => r));
   }
 }
