@@ -1,4 +1,4 @@
-export interface Phsyio {
+export interface PhsyioInsert {
   avatar?: String;
   email: String;
   licenseNumber: String;
@@ -6,6 +6,7 @@ export interface Phsyio {
   specialty: String;
   surname: String;
   userID: String;
+}
+export interface Phsyio extends PhsyioInsert {
   _id: String;
 }
-export interface PhysioInsert extends Phsyio {}
