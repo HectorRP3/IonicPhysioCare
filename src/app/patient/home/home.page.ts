@@ -8,6 +8,8 @@ import { Patient } from '../interfaces/patient';
 import { PatientCardComponent } from '../patient-card/patient-card.component';
 import { PatientService } from '../services/patient.service';
 import { Router } from '@angular/router';
+import { Preferences } from '@capacitor/preferences';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({
   selector: 'home',
@@ -20,7 +22,9 @@ export class HomePage {
   patients = signal<Patient[]>([]);
   #patientService = inject(PatientService);
   role = '';
+  name = '';
   #router = inject(Router);
+  #authService = inject(AuthService);
 
 
   constructor() { }
@@ -29,7 +33,23 @@ export class HomePage {
     this.reloadPatients();
   }
 
-  reloadPatients(refresher?: IonRefresher) {
+  async reloadPatients(refresher?: IonRefresher) {
+
+    const { value: idUser } = await Preferences.get({ key: 'fs-iduser' });
+    const { value: token } = await Preferences.get({ key: 'fs-token' });
+    console.log('Token guardado en home de patient:', token);
+
+    if (!token) {
+      // en caso de que no haya token, redirige al login
+      this.#router.navigate(['/auth/login']);
+      return;
+    }
+
+    this.role = this.#authService.decodeToken(token).rol;
+    this.name = this.#authService.decodeToken(token).login;
+
+    console.log('Rol decodificado en home de patient:', this.role);
+
     this.#patientService.getPatients()
       .subscribe((patients) => {
         this.patients.set(patients);
@@ -41,7 +61,6 @@ export class HomePage {
 
   createPatient() {
     this.#router.navigate(['/patients/add'], {
-        //queryParams: { physioId: result.data.physio },
     });
   }
 
