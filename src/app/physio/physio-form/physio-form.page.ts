@@ -4,6 +4,7 @@ import {
   DestroyRef,
   inject,
   OnInit,
+  signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -13,6 +14,7 @@ import {
   Validators,
 } from '@angular/forms';
 import {
+  ModalController,
   ToastController,
   NavController,
   IonRouterLink,
@@ -42,6 +44,8 @@ import { sameValue } from 'src/app/shared/validators/same-value.validators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PhsyioInsert } from '../interfaces/physio';
 import { PhysioService } from '../services/physio.service';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { CropperComponent } from 'src/app/shared/modal/cropper/cropper.component';
 
 @Component({
   selector: 'physio-form',
@@ -85,10 +89,12 @@ export class PhysioFormPage {
   #changeDetector = inject(ChangeDetectorRef);
   #destroyRef = inject(DestroyRef);
   #physioService = inject(PhysioService);
+  #modalCtrl = inject(ModalController);
+  imagenBase64: string | null = null;
   passwordControl = this.#fb.control('', {
     validators: [Validators.required],
   });
-
+  imageBase64: string | null = null;
   physioForm = this.#fb.group({
     name: ['', [Validators.required]],
     surname: ['', [Validators.required]],
@@ -149,9 +155,9 @@ export class PhysioFormPage {
       allowEditing: true,
       resultType: CameraResultType.DataUrl, // Base64 (url encoded)
     });
-
-    this.physioForm.get('avatar')?.setValue(photo.dataUrl as string);
-    this.#changeDetector.markForCheck();
+    this.imageBase64 = photo.dataUrl as string;
+    console.log('Photo taken:', this.imageBase64);
+    this.openModal();
   }
 
   async pickFromGallery() {
@@ -162,11 +168,26 @@ export class PhysioFormPage {
       allowEditing: true,
       resultType: CameraResultType.DataUrl, // Base64 (url encoded)
     });
-    this.physioForm.get('avatar')?.setValue(photo.dataUrl as string);
-    this.#changeDetector.markForCheck();
+    this.imageBase64 = photo.dataUrl as string;
+    console.log('Photo taken:', this.imageBase64);
+    this.openModal();
   }
 
   cancel() {
     this.#navController.back();
+  }
+
+  async openModal() {
+    const modal = await this.#modalCtrl.create({
+      component: CropperComponent,
+      componentProps: { imagenBase64: this.imageBase64 },
+    });
+    await modal.present();
+    const result = await modal.onDidDismiss();
+    if (result.data && result.data.avatar) {
+      console.log('Imagen selected:', result.data.avatar);
+      this.physioForm.get('avatar')?.setValue(result.data.avatar);
+      this.#changeDetector.markForCheck();
+    }
   }
 }

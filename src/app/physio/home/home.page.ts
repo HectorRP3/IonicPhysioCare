@@ -112,4 +112,10 @@ export class HomePage {
   toAddForm() {
     this.#navController.navigateForward('/physios/add');
   }
+
+  deletePhysio(physioId: string) {
+    this.physios.update((currentPhysios) =>
+      currentPhysios.filter((physio) => physio._id !== physioId)
+    );
+  }
 }
