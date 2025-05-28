@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Avatar</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  @if(imagenBase64) {
+  <image-cropper
+    [imageBase64]="imagenBase64"
+    [maintainAspectRatio]="true"
+    [aspectRatio]="aspectRatio"
+    [output]="'base64'"
+    (imageCropped)="imageCropped($event)"
+  ></image-cropper>
+  }
+  <ion-button color="primary" expand="block" (click)="choosedPhysio()">
+    <ion-label>Tso crop a picture</ion-label>
+  </ion-button>
+</ion-content>

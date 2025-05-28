@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
-import { Component, input, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, inject, input, OnInit, output } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import {
   IonCard,
   IonCardTitle,
@@ -26,6 +26,7 @@ import {
   NavController,
 } from '@ionic/angular/standalone';
 import { Phsyio } from '../interfaces/physio';
+import { PhysioService } from '../services/physio.service';
 @Component({
   selector: 'physio-card',
   templateUrl: './physio-card.component.html',
@@ -55,4 +56,73 @@ import { Phsyio } from '../interfaces/physio';
 })
 export class PhysioCardComponent {
   physio = input.required<Phsyio>();
+  rol = input.required<string>();
+  #actionSheetController = inject(ActionSheetController);
+  #physioService = inject(PhysioService);
+  #toastCtrl = inject(ToastController);
+  deleted = output<void>();
+  #router = inject(Router);
+  async showActionAdmind() {
+    const actionSheet = await this.#actionSheetController.create({
+      header: 'To do',
+      buttons: [
+        {
+          text: 'Delete',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            this.#physioService.deletePhysio(this.physio()._id).subscribe({
+              next: async () => {
+                const toast = await this.#toastCtrl.create({
+                  message: 'Physio deleted successfully',
+                  duration: 2000,
+                  position: 'top',
+                });
+                await toast.present();
+                this.deleted.emit();
+              },
+              error: async (err) => {
+                const toast = await this.#toastCtrl.create({
+                  message: `Error deleting physio: ${err.message}`,
+                  duration: 2000,
+                  position: 'top',
+                });
+                await toast.present();
+              },
+            });
+          },
+        },
+        {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+        },
+      ],
+    });
+    await actionSheet.present();
+  }
+
+  async showActionPatient() {
+    const actionSheet = await this.#actionSheetController.create({
+      header: 'To do',
+      buttons: [
+        {
+          text: 'Request Appointment',
+          role: 'select',
+          icon: 'planet',
+          handler: () => {
+            this.#router.navigate(['/appointments/add'], {
+              queryParams: { physioId: this.physio()._id },
+            });
+          },
+        },
+        {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+        },
+      ],
+    });
+    await actionSheet.present();
+  }
 }

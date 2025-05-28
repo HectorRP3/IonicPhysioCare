@@ -15,11 +15,35 @@
     </ion-row>
   </ion-grid>
   <ion-card-header>
-    <ion-card-title
-      routerDirection="forward"
-      [routerLink]="['/physios/', physio()._id]"
-      >{{ physio().name }}</ion-card-title
-    >
+    <ion-row>
+      <ion-col size="8">
+        <ion-card-title
+          routerDirection="forward"
+          [routerLink]="['/physios/', physio()._id]"
+          >{{ physio().name }}</ion-card-title
+        >
+      </ion-col>
+
+      <ion-col>
+        @if (rol() == "admin"){
+        <ion-button
+          shape="round"
+          fill="outline"
+          color="warning"
+          (click)="showActionAdmind()"
+          ><ion-icon name="ellipsis-horizontal"></ion-icon
+        ></ion-button>
+        } @if(rol()=="patient"){
+        <ion-button
+          shape="round"
+          fill="outline"
+          color="warning"
+          (click)="showActionPatient()"
+          ><ion-icon name="ellipsis-horizontal"></ion-icon>
+        </ion-button>
+        }
+      </ion-col>
+    </ion-row>
   </ion-card-header>
 
   <ion-card-content>
