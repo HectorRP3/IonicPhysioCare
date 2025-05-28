@@ -1,13 +1,159 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>physio-form</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>ADD PHYSIOS</ion-title>
   </ion-toolbar>
 </ion-header>
+<!-- <ion-label color="danger" *ngIf="usuario.controls.email.errors?.email && (usuario.touched || usuario.dirty)">* El email no es válido.</ion-label> -->
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">physio-form</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <form [formGroup]="physioForm" (ngSubmit)="createPhysio()">
+    <ion-list>
+      <ion-item>
+        <ion-input
+          name="name"
+          label="Name"
+          labelPlacement="floating"
+          formControlName="name"
+        ></ion-input>
+        @let name = physioForm.controls.name; @if(name.errors?.['required'] &&
+        (name.touched || name.dirty)) {
+        <ion-text color="danger">Name is required</ion-text>
+        }
+      </ion-item>
+      <ion-item>
+        <ion-input
+          type="email"
+          name="email"
+          label="Email"
+          labelPlacement="floating"
+          formControlName="email"
+        ></ion-input>
+        @let email = physioForm.controls.email; @if(email.errors?.['required']
+        && (email.touched || email.dirty)) {
+        <ion-text color="danger">Email is required</ion-text>
+        } @if(email.errors?.['email'] && (email.touched || email.dirty)) {
+        <ion-text color="danger">Email is not valid</ion-text>
+        }
+      </ion-item>
+      <ion-item>
+        <ion-input
+          name="surname"
+          label="Surname"
+          labelPlacement="floating"
+          formControlName="surname"
+        ></ion-input>
+        @let surname = physioForm.controls.surname;
+        @if(surname.errors?.['required'] && (surname.touched || surname.dirty))
+        {
+        <ion-text color="danger">Surname is required</ion-text>
+        }
+      </ion-item>
+      <ion-item>
+        <ion-select
+          name="specialty"
+          label="Specialty"
+          labelPlacement="floating"
+          formControlName="specialty"
+        >
+          <ion-select-option value="Sports">Sports</ion-select-option>
+          <ion-select-option value="Neurological"
+            >Neurological</ion-select-option
+          >
+          <ion-select-option value="Pediatric">Pediatric</ion-select-option>
+          <ion-select-option value="Geriatric">Geriatric</ion-select-option>
+          <ion-select-option value="Oncological">Oncological</ion-select-option>
+        </ion-select>
+        @let specialty = physioForm.controls.specialty;
+        @if(specialty.errors?.['required'] && (specialty.touched ||
+        specialty.dirty)) {
+        <ion-text color="danger">Specialty is required</ion-text>
+        }
+      </ion-item>
+      <ion-item>
+        <ion-input
+          name="licenseNumber"
+          label="License Number"
+          labelPlacement="floating"
+          formControlName="licenseNumber"
+        ></ion-input>
+        @let licenseNumber = physioForm.controls.licenseNumber;
+        @if(licenseNumber.errors?.['required'] && (licenseNumber.touched ||
+        licenseNumber.dirty)) {
+        <ion-text color="danger">License Number is required</ion-text>
+        } @if(licenseNumber.errors?.['pattern'] && (licenseNumber.touched ||
+        licenseNumber.dirty)) {
+        <ion-text color="danger"
+          >License Number must be 9 digits you have to add or remove:{{
+          8-licenseNumber.value.length }}</ion-text
+        >
+        }
+      </ion-item>
+
+      <ion-item>
+        <ion-input
+          type="password"
+          name="password"
+          label="Password"
+          labelPlacement="floating"
+          formControlName="password"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          type="password"
+          name="password2"
+          label="Repeat password"
+          labelPlacement="floating"
+          formControlName="password2"
+        ></ion-input>
+        @let password2 = physioForm.get('password2')!.value; @if (password2 &&
+        password2 !== physioForm.get('password')!.value) {
+        <ion-text color="danger">Passwords do not match</ion-text>
+        }
+      </ion-item>
+      <ion-item>
+        <ion-label position="inset">Avatar</ion-label>
+        <ion-button color="secondary" (click)="takePhoto()">
+          <ion-icon name="camera" slot="start"></ion-icon>
+          Camera
+        </ion-button>
+        <ion-button color="tertiary" (click)="pickFromGallery()">
+          <ion-icon name="images" slot="start"></ion-icon>
+          Gallery
+        </ion-button>
+      </ion-item>
+    </ion-list>
+    @if (physioForm.get('avatar')!.value) {
+    <ion-img [src]="physioForm.get('avatar')!.value" alt="Imagen"></ion-img>
+    }
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-button
+            type="submit"
+            color="primary"
+            expand="block"
+            [disabled]="physioForm.invalid || !physioForm.get('avatar')!.value"
+          >
+            <ion-icon name="document-text" slot="start"></ion-icon>
+            Register
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button
+            color="danger"
+            expand="block"
+            fill="outline"
+            (click)="cancel()"
+          >
+            <ion-icon name="arrow-undo-circle" slot="start"></ion-icon>
+            Cancel
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
 </ion-content>
