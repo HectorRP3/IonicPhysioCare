@@ -66,7 +66,6 @@ import { PhysioService } from '../services/physio.service';
     IonItem,
     IonButton,
     IonLabel,
-    IonDatetime,
     IonList,
     IonIcon,
     IonInput,

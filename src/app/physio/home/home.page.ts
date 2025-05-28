@@ -33,6 +33,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Preferences } from '@capacitor/preferences';
 import { PhysioService } from '../services/physio.service';
+import { PhysioCardComponent } from '../physio-card/physio-card.component';
 @Component({
   selector: 'home',
   templateUrl: './home.page.html',
@@ -59,6 +60,7 @@ import { PhysioService } from '../services/physio.service';
     IonGrid,
     IonSearchbar,
     IonList,
+    PhysioCardComponent,
   ],
 })
 export class HomePage {
