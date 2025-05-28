@@ -1,4 +1,5 @@
 export interface PatientInsert {
+    avatar?: string;
     name?: string;
     surname?: string;
     birthDate?: string;
@@ -6,7 +7,6 @@ export interface PatientInsert {
     insuranceNumber?: string;
     email?: string;
     userID?: string;
-    avatar?: string;
 }
 export interface Patient extends PatientInsert {
     _id: string;

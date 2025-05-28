@@ -13,15 +13,11 @@ import { PatientService } from '../services/patient.service';
   standalone: true,
   imports: [IonRefresherContent, IonRefresher, IonList, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, PatientCardComponent]
 })
-export class HomePage implements OnInit {
+export class HomePage {
   patients = signal<Patient[]>([]);
   #patientService = inject(PatientService);
 
   constructor() { }
-
-  ngOnInit() {
-    this.reloadPatients();
-  }
 
   ionViewWillEnter() {
     this.reloadPatients();
