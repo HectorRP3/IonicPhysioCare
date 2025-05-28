@@ -7,6 +7,17 @@
 @if (patient()) {
 
 <ion-card>
+  <ion-card-header>
+    @if (rol() == "admin"){
+        <ion-button
+          shape="round"
+          fill="outline"
+          color="warning"
+          (click)="showActionAdmin()"
+          ><ion-icon name="ellipsis-horizontal"></ion-icon
+        ></ion-button>
+    }
+  </ion-card-header>
 <ion-card-content>
   <ion-grid>
     <ion-row>

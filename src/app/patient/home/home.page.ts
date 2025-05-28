@@ -2,7 +2,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonIcon, IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonRefresherContent, IonRefresher, IonFabButton, IonFab,
-  IonButtons, IonMenuButton,
+  IonButtons, IonMenuButton, IonSearchbar,
  } from '@ionic/angular/standalone';
 import { Patient } from '../interfaces/patient';
 import { PatientCardComponent } from '../patient-card/patient-card.component';
@@ -16,7 +16,7 @@ import { AuthService } from 'src/app/auth/services/auth.service';
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonMenuButton, IonButtons, IonIcon, IonFab, IonFabButton, IonRefresherContent, IonRefresher, IonList, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, PatientCardComponent]
+  imports: [IonSearchbar, IonMenuButton, IonButtons, IonIcon, IonFab, IonFabButton, IonRefresherContent, IonRefresher, IonList, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, PatientCardComponent]
 })
 export class HomePage {
   patients = signal<Patient[]>([]);
@@ -25,6 +25,7 @@ export class HomePage {
   name = '';
   #router = inject(Router);
   #authService = inject(AuthService);
+  search = '';
 
 
   constructor() { }
@@ -44,17 +45,27 @@ export class HomePage {
       this.#router.navigate(['/auth/login']);
       return;
     }
-
+        refresher?.complete();
     this.role = this.#authService.decodeToken(token).rol;
     this.name = this.#authService.decodeToken(token).login;
 
     console.log('Rol decodificado en home de patient:', this.role);
 
-    this.#patientService.getPatients()
-      .subscribe((patients) => {
-        this.patients.set(patients);
-        console.log('Patients reloaded:', this.patients());
-      });
+    this.#patientService.getPatients(this.search)
+      .subscribe({
+        next: (patients) => {
+          this.patients.set(patients.resultado);
+          console.log('Patients reloaded:', this.patients());
+        },
+        error: (err) => {
+          console.error('Error loading patients:', err);
+        }
+      }
+      //   (patients) => {
+      //   this.patients.set(patients.resultado);
+      //   console.log('Patients reloaded:', this.patients());
+      // }
+    );
 
     refresher?.complete();
   }
@@ -62,6 +73,12 @@ export class HomePage {
   createPatient() {
     this.#router.navigate(['/patients/add'], {
     });
+  }
+
+  deletePatient(patientId: string) {
+    this.patients.update((currentPatients) =>
+      currentPatients.filter((patient) => patient._id !== patientId)
+    );
   }
 
 }

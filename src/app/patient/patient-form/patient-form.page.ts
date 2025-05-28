@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EmailValidator, FormControl, FormsModule, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NavController, IonLabel, IonMenuButton, IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton, IonItem, IonList, IonIcon, IonInput, ToastController, IonDatetime } from '@ionic/angular/standalone';
+import { NavController, IonLabel, IonMenuButton, IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton, IonItem, IonList, IonIcon, IonInput, ToastController, IonDatetime, IonImg } from '@ionic/angular/standalone';
 import { PatientService } from '../services/patient.service';
 import { ValueEqualsDirective } from 'src/app/shared/directives/value-equals.directive';
 import { add } from 'ionicons/icons';
@@ -14,7 +14,7 @@ import { Geolocation } from '@capacitor/geolocation';
   templateUrl: './patient-form.page.html',
   styleUrls: ['./patient-form.page.scss'],
   standalone: true,
-  imports: [IonInput, IonIcon, IonList, FormsModule, ReactiveFormsModule, IonLabel, IonItem, IonButton, IonMenuButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, ValueEqualsDirective, IonDatetime ]
+  imports: [IonImg, IonInput, IonIcon, IonList, FormsModule, ReactiveFormsModule, IonLabel, IonItem, IonButton, IonMenuButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, ValueEqualsDirective, IonDatetime ]
 })
 export class PatientFormPage {
   #patientService = inject(PatientService);
