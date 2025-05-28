@@ -72,7 +72,7 @@ export class PhysioCardComponent {
           role: 'destructive',
           icon: 'trash',
           handler: () => {
-            this.#physioService.deletePhysio(this.physio()._id).subscribe({
+            this.#physioService.deletePhysio(this.physio()._id!).subscribe({
               next: async () => {
                 const toast = await this.#toastCtrl.create({
                   message: 'Physio deleted successfully',

@@ -24,7 +24,7 @@ import {
   IonInput,
   ToastController,
   IonDatetime,
-  ModalController,
+  IonImg,
 } from '@ionic/angular/standalone';
 import { PatientService } from '../services/patient.service';
 import { ValueEqualsDirective } from 'src/app/shared/directives/value-equals.directive';
@@ -40,6 +40,7 @@ import { CropperComponent } from 'src/app/shared/modal/cropper/cropper.component
   styleUrls: ['./patient-form.page.scss'],
   standalone: true,
   imports: [
+    IonImg,
     IonInput,
     IonIcon,
     IonList,
@@ -58,7 +59,6 @@ import { CropperComponent } from 'src/app/shared/modal/cropper/cropper.component
     FormsModule,
     ValueEqualsDirective,
     IonDatetime,
-    CropperComponent,
   ],
 })
 export class PatientFormPage {

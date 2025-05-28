@@ -46,6 +46,7 @@ export class AuthService {
         catchError(() => of(null)) // Manejo de error, devuelve null si no se encuentra el perfil
       );
     }
+
     return of(null); // Si no es ni physio ni patient, devuelve null
   }
 
@@ -80,6 +81,7 @@ export class AuthService {
   async logout(): Promise<void> {
     await Preferences.remove({ key: 'fs-token' });
     await Preferences.remove({ key: 'fs-iduser' });
+    this.rol.set('');
     this.#logged.set(false);
   }
 

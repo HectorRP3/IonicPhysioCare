@@ -6,8 +6,14 @@
     <ion-title>home</ion-title>
   </ion-toolbar>
 </ion-header>
+    
 
 <ion-content [fullscreen]="true">
+  <ion-searchbar
+      debounce="600"
+      [(ngModel)]="search"
+      (ionInput)="reloadPatients()"
+  ></ion-searchbar>
 
   <ion-refresher
     #refresher
@@ -29,6 +35,8 @@
     @for (patient of patients(); track patient._id) {
     <patient-card
       [patient]="patient"
+      [rol]="role"
+      (deleted)="deletePatient(patient._id!.toString())"
     ></patient-card>
     }
   </ion-list>

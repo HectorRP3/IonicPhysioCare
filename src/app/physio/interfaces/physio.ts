@@ -4,7 +4,7 @@ export interface PhsyioInsert {
   licenseNumber: String;
   name: String;
   specialty: String;
-  surname: String;
+  surname?: String;
   userID?: String;
   password?: String;
   starts?: number;
