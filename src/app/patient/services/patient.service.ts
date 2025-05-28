@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Patient } from '../interfaces/patient';
+import { Patient, PatientInsert } from '../interfaces/patient';
 import { map, Observable } from 'rxjs';
 import { PatientsResponse, SinglePatientResponse } from '../interfaces/responses';
 
@@ -24,6 +24,12 @@ export class PatientService {
       console.log("error de servicio:" + r.resultado._id);
       return r.resultado;
     }));
+  }
+
+  createPatient(patient: PatientInsert): Observable<PatientInsert> {
+    return this.#http
+      .post<PatientInsert>(`${this.#patientUrl}`, patient)
+      .pipe(map((r) => r))
   }
 
 }
