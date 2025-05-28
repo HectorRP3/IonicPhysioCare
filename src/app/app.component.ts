@@ -114,7 +114,7 @@ export class AppComponent {
   public appPages = [
     { title: 'Appointments', url: '/appointments', icon: 'pencil' },
     { title: 'Physios', url: '/physios', icon: 'people' },
-    // { title: 'New event', url: '/events/add', icon: 'add' },
+    { title: 'Patients', url: '/patients', icon: 'people' },
     // { title: 'My profile', url: '/profile/me', icon: 'person' },
   ];
   #platform = inject(Platform);
