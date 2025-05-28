@@ -30,8 +30,7 @@
   </ion-refresher>
   @if(role == "admin") {
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="secondary">
-      <!-- (click)="openModal()" -->
+    <ion-fab-button color="secondary" (click)="toAddForm()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
@@ -39,7 +38,7 @@
 
   <ion-list style="padding-bottom: 50px">
     @for (physio of physios(); track physio._id) {
-    <p>{{physio.name}}</p>
+    <p>{{physio.name + " " + physio.surname}}</p>
     }
   </ion-list>
 </ion-content>

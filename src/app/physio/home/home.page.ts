@@ -58,6 +58,7 @@ import { PhysioService } from '../services/physio.service';
     IonRow,
     IonGrid,
     IonSearchbar,
+    IonList,
   ],
 })
 export class HomePage {
@@ -105,5 +106,8 @@ export class HomePage {
           .then((toast) => toast.present());
       },
     });
+  }
+  toAddForm() {
+    this.#navController.navigateForward('/physios/add');
   }
 }

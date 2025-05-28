@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { Phsyio } from '../interfaces/physio';
+import { Phsyio, PhsyioInsert } from '../interfaces/physio';
 import { PhsyioResponse, SinglePhsyioResponse } from '../interfaces/response';
 
 @Injectable({
@@ -25,6 +25,12 @@ export class PhysioService {
   getPhysioById(id: String): Observable<SinglePhsyioResponse> {
     return this.#http
       .get<SinglePhsyioResponse>(`${this.#physioUrl}/${id}`)
+      .pipe(map((r) => r));
+  }
+
+  createPhysio(physio: PhsyioInsert): Observable<SinglePhsyioResponse> {
+    return this.#http
+      .post<SinglePhsyioResponse>(this.#physioUrl, physio)
       .pipe(map((r) => r));
   }
 
