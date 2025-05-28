@@ -11,10 +11,15 @@ export class PatientService {
   #patientUrl = 'patients';
   #http = inject(HttpClient);
 
-  getPatients(): Observable<Patient[]> {
+  getPatients(search: String = ''): Observable<PatientsResponse> {
+    let params;
+    if (search) {
+      params = new URLSearchParams({ filter: search.toString() });
+    }
+    console.log(`${this.#patientUrl}?${params}`);
     return this.#http
-      .get<PatientsResponse>(this.#patientUrl)
-      .pipe(map((r) => r.resultado));
+      .get<PatientsResponse>(`${this.#patientUrl}?${params}`)
+      .pipe(map((r) => r));
   }
 
   getPatientById(id: string): Observable<Patient> {
@@ -30,6 +35,12 @@ export class PatientService {
     return this.#http
       .post<PatientInsert>(`${this.#patientUrl}`, patient)
       .pipe(map((r) => r))
+  }
+
+  deletePatient(id: String): Observable<SinglePatientResponse> {
+      return this.#http
+        .delete<SinglePatientResponse>(`${this.#patientUrl}/${id}`)
+        .pipe(map((r) => r));
   }
 
 }

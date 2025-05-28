@@ -1,88 +1,3 @@
-<!-- <ion-card color="verdeoscuro">
-  <ion-card-content routerDirection="forward"
-    [routerLink]="['/profile', patient()._id]">
-
-
-    <ion-grid>
-
-
-
-      <ion-row justify="end">
-        <ion-col size="auto">
-
-    <ion-list class="ion-no-padding">
-
-       <ion-item color="azulado">
-        <ion-thumbnail>
-          <img [src]="patient().avatar">
-        </ion-thumbnail>
-      </ion-item>
-
-      <ion-item color="verde">
-        <ion-icon name="git-branch-outline" slot="start"></ion-icon>
-        <ion-label
-          ><strong>Name:</strong>
-          {{ patient().name ?? "Jane" }}</ion-label
-        >
-      </ion-item>
-
-      <ion-item color="verdeclaro">
-        <ion-icon name="git-merge-outline" slot="start"></ion-icon>
-        <ion-label
-          ><strong>Surname:</strong>
-          {{ patient().surname ?? "Doe" }}</ion-label
-        >
-      </ion-item>
-
-      <ion-item color="verde">
-        <ion-icon name="calendar-number-outline" slot="start"></ion-icon>
-        <ion-label
-          ><strong>BirthDate:</strong>
-          {{ patient().birthDate ? (patient().birthDate  | date:'dd/MM/yyyy') : 'Not specified' }}
-        </ion-label>
-      </ion-item>
-
-      <ion-item color="verdeclaro">
-        <ion-icon name="home-outline" slot="start"></ion-icon>
-        <ion-label
-          ><strong>Address:</strong>
-          {{ patient().address ?? "Not specified" }}</ion-label
-        >
-      </ion-item>
-
-      <ion-item color="verde">
-        <ion-icon name="id-card-outline" slot="start"></ion-icon>
-        <ion-label
-          ><strong>Insurance Number:</strong>
-          {{ patient().insuranceNumber ?? "Not specified" }}</ion-label
-        >
-      </ion-item>
-
-      <ion-item color="verdeclaro">
-        <ion-icon name="mail-outline" slot="start"></ion-icon>
-        <ion-label
-          ><strong>Email:</strong>
-          {{ patient().email ?? "Not specified" }}</ion-label
-        >
-      </ion-item>
-
-    </ion-list>
-        </ion-col>
-
-        <a routerDirection="forward" [routerLink]="['/profile', patient()._id]"
-                ><ion-img slot="start"
-                    [src]="patient().avatar"
-                    [alt]="patient().name"
-                    style="width: 100%;"
-                  ></ion-img
-                ></a>
-
-      </ion-row>
-    </ion-grid>
-
-  </ion-card-content>
-</ion-card> -->
-
 <ion-card>
   <ion-grid>
     <ion-row>
@@ -90,13 +5,29 @@
     </ion-row>
   </ion-grid>
   <ion-card-header>
+    <ion-row>
+      <ion-col size="8">
     <ion-chip
       ><ion-card-title
         routerDirection="forward"
         [routerLink]="['/profile', patient()._id]"
         >{{ patient().name }}</ion-card-title
-      ></ion-chip
-    >
+      ></ion-chip>
+      </ion-col>
+
+      <ion-col>
+        @if (rol() == "admin"){
+        <ion-button
+          shape="round"
+          fill="outline"
+          color="warning"
+          (click)="showActionAdmin()"
+          ><ion-icon name="ellipsis-horizontal"></ion-icon
+        ></ion-button>
+        }
+      </ion-col>
+    </ion-row>
+
   </ion-card-header>
 
   <ion-card-content>

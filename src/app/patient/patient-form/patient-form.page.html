@@ -86,6 +86,10 @@
 
     </ion-list>
 
+    @if (newPatient.avatar) {
+    <ion-img [src]="newPatient.avatar"></ion-img>
+    }
+
     <ion-button
       expand="full"
       type="submit"
