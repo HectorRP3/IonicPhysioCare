@@ -1,0 +1,47 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/physios"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Physio Detail</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  @if(physio.isLoading()){
+  <ion-spinner name="crescent" class="ion-text-center"></ion-spinner>
+  }@else {
+  <physio-card
+    [physio]="physio.value()!.resultado"
+    (deleted)="deletephysio()"
+    [rol]="rol()"
+  ></physio-card>
+  } @if(isMyPhysio()) {
+  <ion-list>
+    <ion-item>
+      <ion-label position="inset">Avatar</ion-label>
+      <ion-button color="secondary" (click)="takePhoto()">
+        <ion-icon name="camera" slot="start"></ion-icon>
+        Camera
+      </ion-button>
+      <ion-button color="tertiary" (click)="pickFromGallery()">
+        <ion-icon name="images" slot="start"></ion-icon>
+        Gallery
+      </ion-button>
+    </ion-item>
+  </ion-list>
+  }@else {
+  <!-- number para valorar -->
+  <ion-list>
+    <ion-item>
+      <ion-label position="stacked">Valora al fisio</ion-label>
+      <ion-input
+        type="number"
+        [(ngModel)]="valoracion"
+        placeholder="0-10"
+      ></ion-input>
+    </ion-item>
+    <ion-button expand="full" (click)="valorar()">Valorar</ion-button>
+  </ion-list>
+  }
+</ion-content>

@@ -76,6 +76,7 @@ import {
   homeOutline,
   idCardOutline,
   mailOutline,
+  star,
   documentTextOutline,
 } from 'ionicons/icons';
 import { Patient } from './patient/interfaces/patient';
@@ -173,6 +174,7 @@ export class AppComponent {
       idCardOutline,
       mailOutline,
       documentTextOutline,
+      star,
     });
     effect(() => {
       if (this.#authService.getLogged()) {

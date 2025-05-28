@@ -2,28 +2,33 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <ion-chip [routerLink]="['/physio', appointment().physio]">
+        @if(rol() == "patient") {
+        <ion-chip
+          routerDirection="forward"
+          [routerLink]="['/physios', appointment().physio]"
+        >
           <ion-avatar>
-            @if(rol() == "physio") {
-            <ion-img
-              src="{{ patient()?.avatar }}"
-              alt="{{ patient()?.name }}"
-            ></ion-img>
-            } @else {
             <ion-img
               src="{{ physio()?.avatar }}"
               alt="{{ physio()?.name }}"
             ></ion-img>
-            }
           </ion-avatar>
-          <ion-label>
-            @if(rol() == "physio") {
-            {{ patient()?.name }}
-            } @else {
-            {{ physio()?.name }}
-            }
-          </ion-label>
+          <ion-label>{{ physio()?.name }}</ion-label>
         </ion-chip>
+        } @if(rol() == "physio") {
+        <ion-chip
+          routerDirection="forward"
+          [routerLink]="['/profile', appointment().patient]"
+        >
+          <ion-avatar>
+            <ion-img
+              src="{{ patient()?.avatar }}"
+              alt="{{ patient()?.name }}"
+            ></ion-img>
+          </ion-avatar>
+          <ion-label>{{ patient()?.name }}</ion-label>
+        </ion-chip>
+        }
       </ion-col>
       <ion-col offset="4">
         @if (rol() == "physio"){

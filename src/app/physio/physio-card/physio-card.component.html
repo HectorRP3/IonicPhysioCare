@@ -20,7 +20,7 @@
         <ion-chip>
           <ion-card-title
             routerDirection="forward"
-            [routerLink]="['/physios/', physio()._id]"
+            [routerLink]="['/physios', physio()._id]"
             >{{ physio().name }}</ion-card-title
           ></ion-chip
         >
@@ -54,27 +54,33 @@
         <ion-col class="lista" size="8">
           <ion-list>
             <ion-item>
-              <ion-icon name="map" slot="start"></ion-icon>
+              <ion-icon name="egg" slot="start"></ion-icon>
               <ion-label
                 ><strong>Surname:</strong> {{ physio().surname }}
               </ion-label>
             </ion-item>
             <ion-item>
-              <ion-icon name="map" slot="start"></ion-icon>
+              <ion-icon name="clipboard" slot="start"></ion-icon>
               <ion-label
                 ><strong>Email:</strong> {{ physio().email }}
               </ion-label>
             </ion-item>
             <ion-item>
-              <ion-icon name="map" slot="start"></ion-icon>
+              <ion-icon name="people" slot="start"></ion-icon>
               <ion-label
                 ><strong>License number:</strong> {{ physio().licenseNumber }}
               </ion-label>
             </ion-item>
             <ion-item>
-              <ion-icon name="map" slot="start"></ion-icon>
+              <ion-icon name="compass" slot="start"></ion-icon>
               <ion-label
                 ><strong>Specialty:</strong> {{ physio().specialty }}
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-icon name="golf" slot="start"></ion-icon>
+              <ion-label
+                ><strong>Rating:</strong> {{ physio().starts }}
               </ion-label>
             </ion-item>
           </ion-list>

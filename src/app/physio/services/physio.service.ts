@@ -34,6 +34,12 @@ export class PhysioService {
       .pipe(map((r) => r));
   }
 
+  updatePhysio(physio: Physio): Observable<SinglePhsyioResponse> {
+    return this.#http
+      .put<SinglePhsyioResponse>(`${this.#physioUrl}/${physio._id}`, physio)
+      .pipe(map((r) => r));
+  }
+
   deletePhysio(id: String): Observable<SinglePhsyioResponse> {
     return this.#http
       .delete<SinglePhsyioResponse>(`${this.#physioUrl}/${id}`)
