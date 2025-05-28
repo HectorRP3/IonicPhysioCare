@@ -1,5 +1,6 @@
 <ion-header>
   <ion-toolbar>
+      <ion-label><p>{{ patient()!.address }}</p></ion-label>
   </ion-toolbar>
 </ion-header>
 
@@ -9,4 +10,9 @@
         <ol-marker [coordinates]="coordinates()"></ol-marker>
       </ol-map>
   }
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="secondary" (click)="openGPS()">
+      <ion-icon name="navigate"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
