@@ -17,10 +17,12 @@
   <ion-card-header>
     <ion-row>
       <ion-col size="8">
-        <ion-card-title
-          routerDirection="forward"
-          [routerLink]="['/physios/', physio()._id]"
-          >{{ physio().name }}</ion-card-title
+        <ion-chip>
+          <ion-card-title
+            routerDirection="forward"
+            [routerLink]="['/physios/', physio()._id]"
+            >{{ physio().name }}</ion-card-title
+          ></ion-chip
         >
       </ion-col>
 

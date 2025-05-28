@@ -35,7 +35,8 @@ import { Preferences } from '@capacitor/preferences';
   selector: 'patient-card',
   templateUrl: './patient-card.component.html',
   styleUrls: ['./patient-card.component.scss'],
-  imports: [RouterLink,
+  imports: [
+    RouterLink,
     IonRouterLink,
     IonCard,
     IonCardTitle,
@@ -58,12 +59,12 @@ import { Preferences } from '@capacitor/preferences';
     IonThumbnail,
   ],
 })
-export class PatientCardComponent  implements OnInit {
+export class PatientCardComponent implements OnInit {
   patient = input.required<Patient>();
-  #patientService =inject(PatientService);
+  #patientService = inject(PatientService);
   token: string | null = '';
 
-  constructor() { }
+  constructor() {}
 
   async ngOnInit() {
     // this.token = await this.getToken();
@@ -77,5 +78,4 @@ export class PatientCardComponent  implements OnInit {
   //   console.log('Token usado en patient-card: ', token);
   //   return token;
   // }
-
 }

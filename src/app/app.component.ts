@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { ToastController, NavController } from '@ionic/angular/standalone';
 import { Platform } from '@ionic/angular';
@@ -76,8 +76,11 @@ import {
   homeOutline,
   idCardOutline,
   mailOutline,
-  documentTextOutline
+  documentTextOutline,
 } from 'ionicons/icons';
+import { Patient } from './patient/interfaces/patient';
+import { Physio } from './physio/interfaces/physio';
+import { AuthService } from './auth/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -118,6 +121,8 @@ export class AppComponent {
     { title: 'Patients', url: '/patients', icon: 'people' },
     // { title: 'My profile', url: '/profile/me', icon: 'person' },
   ];
+  user = signal<Patient | Physio | null>(null);
+  #authService = inject(AuthService);
   #platform = inject(Platform);
   #nav = inject(NavController);
   #toast = inject(ToastController);
@@ -167,12 +172,22 @@ export class AppComponent {
       homeOutline,
       idCardOutline,
       mailOutline,
-      documentTextOutline
+      documentTextOutline,
     });
-
+    effect(() => {
+      if (this.#authService.getLogged()) {
+        this.#authService.getProfile().subscribe((user) => this.user.set(user));
+      } else {
+        this.user.set(null);
+      }
+    });
     this.checkToken();
   }
-
+  async logout() {
+    this.user.set(null);
+    await this.#authService.logout();
+    this.#nav.navigateRoot(['/auth/login']);
+  }
   async checkToken() {
     const { value } = await Preferences.get({ key: 'token' });
     this.menuEnabled = !!value;

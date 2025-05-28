@@ -40,7 +40,7 @@ import {
 import { RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { AppointmentService } from '../services/appointment.service';
-import { Phsyio } from 'src/app/physio/interfaces/physio';
+import { Physio } from 'src/app/physio/interfaces/physio';
 import { Preferences } from '@capacitor/preferences';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { PhysioService } from 'src/app/physio/services/physio.service';
@@ -86,7 +86,7 @@ export class AppointmentCardComponent {
   rol = input.required<string>();
   #authService = inject(AuthService);
   #physioService = inject(PhysioService);
-  physio = signal<Phsyio | null>(null);
+  physio = signal<Physio | null>(null);
   token: string | null = '';
   deleted = output<void>();
   update = output<Appointment>();

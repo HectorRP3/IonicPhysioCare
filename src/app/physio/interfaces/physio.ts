@@ -8,6 +8,6 @@ export interface PhsyioInsert {
   userID?: String;
   password?: String;
 }
-export interface Phsyio extends PhsyioInsert {
+export interface Physio extends PhsyioInsert {
   _id: String;
 }
