@@ -20,7 +20,10 @@ export class PatientService {
   getPatientById(id: string): Observable<Patient> {
     return this.#http
     .get<SinglePatientResponse>(`${this.#patientUrl}/${id}`)
-    .pipe(map((r) => r.resultado));
+    .pipe(map((r) => {
+      console.log("error de hector:" + r.resultado);
+      return r.resultado;
+    }));
   }
 
 }

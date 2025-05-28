@@ -3,6 +3,12 @@
     [routerLink]="['/profile', patient()._id]">
     <ion-list class="ion-no-padding">
 
+      <ion-item color="azulado">
+        <ion-thumbnail>
+          <img [src]="patient().avatar">
+        </ion-thumbnail>
+      </ion-item>
+
       <ion-item color="verde">
         <ion-icon name="git-branch-outline" slot="start"></ion-icon>
         <ion-label
