@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { Phsyio, PhsyioInsert } from '../interfaces/physio';
+import { Physio, PhsyioInsert } from '../interfaces/physio';
 import { PhsyioResponse, SinglePhsyioResponse } from '../interfaces/response';
 
 @Injectable({

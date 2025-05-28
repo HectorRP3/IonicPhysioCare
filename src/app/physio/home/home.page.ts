@@ -28,7 +28,7 @@ import {
   AlertController,
   IonSearchbar,
 } from '@ionic/angular/standalone';
-import { Phsyio } from '../interfaces/physio';
+import { Physio } from '../interfaces/physio';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Preferences } from '@capacitor/preferences';
@@ -69,7 +69,7 @@ export class HomePage {
   #navController = inject(NavController);
   #actionSheetCtrl = inject(ActionSheetController);
   #alertCtrl = inject(AlertController);
-  physios = signal<Phsyio[]>([]);
+  physios = signal<Physio[]>([]);
   role = '';
   #modalCtrl = inject(ModalController);
   name = '';

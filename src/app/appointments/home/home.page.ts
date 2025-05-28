@@ -86,7 +86,7 @@ export class HomePage {
     const { value: token } = await Preferences.get({ key: 'fs-token' });
     console.log('Token guardado:', token);
     if (!token) {
-      // TODO SACAR MENSAJE DE ALERT Y REDIRIGIR AL LOGIN
+      this.#navController.navigateRoot('/auth/login');
       return;
     }
     refresher?.complete();
@@ -177,9 +177,6 @@ export class HomePage {
     const result = await modal.onDidDismiss();
     if (result.data && result.data.physio) {
       console.log('Physio selected:', result.data.physio);
-      // this.#navController.navigateForward('/appointments/add', {
-      //   queryParams: { physioId: result.data.physio },
-      // });
       this.#router.navigate(['/appointments/add'], {
         queryParams: { physioId: result.data.physio },
       });

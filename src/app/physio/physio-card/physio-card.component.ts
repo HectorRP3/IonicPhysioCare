@@ -25,7 +25,7 @@ import {
   ActionSheetController,
   NavController,
 } from '@ionic/angular/standalone';
-import { Phsyio } from '../interfaces/physio';
+import { Physio } from '../interfaces/physio';
 import { PhysioService } from '../services/physio.service';
 @Component({
   selector: 'physio-card',
@@ -55,7 +55,7 @@ import { PhysioService } from '../services/physio.service';
   ],
 })
 export class PhysioCardComponent {
-  physio = input.required<Phsyio>();
+  physio = input.required<Physio>();
   rol = input.required<string>();
   #actionSheetController = inject(ActionSheetController);
   #physioService = inject(PhysioService);

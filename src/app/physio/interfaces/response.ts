@@ -1,8 +1,8 @@
-import { Phsyio } from './physio';
+import { Physio } from './physio';
 
 export interface SinglePhsyioResponse {
-  resultado: Phsyio;
+  resultado: Physio;
 }
 export interface PhsyioResponse {
-  resultado: Phsyio[];
+  resultado: Physio[];
 }
