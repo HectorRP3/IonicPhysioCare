@@ -47,6 +47,8 @@ import { PhysioService } from 'src/app/physio/services/physio.service';
 import { map, tap } from 'rxjs';
 import { PhysioSelectionComponent } from 'src/app/shared/modal/physio-selection/physio-selection.component';
 import { AppointmentEditComponent } from '../modal/appointment-edit/appointment-edit.component';
+import { Patient } from 'src/app/patient/interfaces/patient';
+import { PatientService } from 'src/app/patient/services/patient.service';
 
 @Component({
   selector: 'appointment-card',
@@ -89,8 +91,8 @@ export class AppointmentCardComponent {
   deleted = output<void>();
   update = output<Appointment>();
   #modalCtrl = inject(ModalController);
-
-  // patient = signal<Patient | undefined>(undefined);
+  #patientService = inject(PatientService);
+  patient = signal<Patient | undefined>(undefined);
 
   constructor() {
     afterNextRender(() => {
@@ -106,6 +108,14 @@ export class AppointmentCardComponent {
 
       if (role === 'physio') {
         console.log('patient');
+        this.#patientService
+          .getPatientById(this.appointment().patient!)
+          .subscribe((res) => {
+            console.log(res);
+            this.patient.update(() => {
+              return res;
+            });
+          });
       } else {
         console.log('physio');
         this.#physioService

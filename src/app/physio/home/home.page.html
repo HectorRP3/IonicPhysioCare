@@ -38,7 +38,7 @@
 
   <ion-list style="padding-bottom: 50px">
     @for (physio of physios(); track physio._id) {
-    <p>{{physio.name + " " + physio.surname}}</p>
+    <physio-card [physio]="physio"></physio-card>
     }
   </ion-list>
 </ion-content>

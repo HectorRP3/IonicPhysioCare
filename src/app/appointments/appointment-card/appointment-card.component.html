@@ -5,8 +5,10 @@
         <ion-chip [routerLink]="['/physio', appointment().physio]">
           <ion-avatar>
             @if(rol() == "physio") {
-            <!-- aqui va lo del patient lo hace olex -->
-            <!-- {{ ().physio }} -->
+            <ion-img
+              src="{{ patient()?.avatar }}"
+              alt="{{ patient()?.name }}"
+            ></ion-img>
             } @else {
             <ion-img
               src="{{ physio()?.avatar }}"
@@ -16,8 +18,7 @@
           </ion-avatar>
           <ion-label>
             @if(rol() == "physio") {
-            <!-- aqui va lo del patient lo hace olex -->
-            <!-- {{ ().physio }} -->
+            {{ patient()?.name }}
             } @else {
             {{ physio()?.name }}
             }
