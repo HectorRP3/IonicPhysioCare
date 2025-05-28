@@ -1,5 +1,8 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="azulado">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
     <ion-title>home</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -14,11 +17,13 @@
     <ion-refresher-content> </ion-refresher-content>
   </ion-refresher>
 
-  <ion-header collapse="condense" color="github">
-    <ion-toolbar>
-      <ion-title size="large">home</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  @if(role == "admin") {
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="secondary" (click)="createPatient()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  }
 
   <ion-list style="padding-bottom: 50px">
     @for (patient of patients(); track patient._id) {
