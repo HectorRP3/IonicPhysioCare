@@ -25,6 +25,7 @@ import {
   IonList,
   ActionSheetController,
   NavController,
+  IonThumbnail,
 } from '@ionic/angular/standalone';
 import { Patient } from '../interfaces/patient';
 import { PatientService } from '../services/patient.service';
@@ -54,6 +55,7 @@ import { Preferences } from '@capacitor/preferences';
     IonList,
     IonImg,
     DatePipe,
+    IonThumbnail,
   ],
 })
 export class PatientCardComponent  implements OnInit {
