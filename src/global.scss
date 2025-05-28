@@ -35,3 +35,58 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 // @import '@ionic/angular/css/palettes/dark.system.css';
+
+.ion-color-github {
+  --ion-color-base: var(--ion-color-github);
+  --ion-color-base-rgb: var(--ion-color-github-rgb);
+  --ion-color-contrast: var(--ion-color-github-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-github-contrast-rgb);
+  --ion-color-shade: var(--ion-color-github-shade);
+  --ion-color-tint: var(--ion-color-github-tint);
+}
+
+.ion-color-verde {
+  --ion-color-base: var(--ion-color-verde);
+  --ion-color-base-rgb: var(--ion-color-verde-rgb);
+  --ion-color-contrast: var(--ion-color-verde-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-verde-contrast-rgb);
+  --ion-color-shade: var(--ion-color-verde-shade);
+  --ion-color-tint: var(--ion-color-verde-tint);
+}
+
+.ion-color-azulado {
+  --ion-color-base: var(--ion-color-azulado);
+  --ion-color-base-rgb: var(--ion-color-azulado-rgb);
+  --ion-color-contrast: var(--ion-color-azulado-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-azulado-contrast-rgb);
+  --ion-color-shade: var(--ion-color-azulado-shade);
+  --ion-color-tint: var(--ion-color-azulado-tint);
+}
+
+.ion-color-verdeclaro {
+  --ion-color-base: var(--ion-color-verdeclaro);
+  --ion-color-base-rgb: var(--ion-color-verdeclaro-rgb);
+  --ion-color-contrast: var(--ion-color-verdeclaro-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-verdeclaro-contrast-rgb);
+  --ion-color-shade: var(--ion-color-verdeclaro-shade);
+  --ion-color-tint: var(--ion-color-verdeclaro-tint);
+}
+
+.ion-color-blanco {
+  --ion-color-base: var(--ion-color-blanco);
+  --ion-color-base-rgb: var(--ion-color-blanco-rgb);
+  --ion-color-contrast: var(--ion-color-blanco-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-blanco-contrast-rgb);
+  --ion-color-shade: var(--ion-color-blanco-shade);
+  --ion-color-tint: var(--ion-color-blanco-tint);
+}
+
+.ion-color-verdeoscuro {
+  --ion-color-base: var(--ion-color-verdeoscuro);
+  --ion-color-base-rgb: var(--ion-color-verdeoscuro-rgb);
+  --ion-color-contrast: var(--ion-color-verdeoscuro-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-verdeoscuro-contrast-rgb);
+  --ion-color-shade: var(--ion-color-verdeoscuro-shade);
+  --ion-color-tint: var(--ion-color-verdeoscuro-tint);
+}
+

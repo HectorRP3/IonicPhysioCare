@@ -1,0 +1,30 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="azulado">
+    <ion-title>home</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-refresher
+    #refresher
+    slot="fixed"
+    (ionRefresh)="reloadPatients(refresher)"
+  >
+    <ion-refresher-content> </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-header collapse="condense" color="github">
+    <ion-toolbar>
+      <ion-title size="large">home</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list style="padding-bottom: 50px">
+    @for (patient of patients(); track patient._id) {
+    <patient-card
+      [patient]="patient"
+    ></patient-card>
+    }
+  </ion-list>
+</ion-content>

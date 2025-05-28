@@ -65,6 +65,17 @@ import {
   colorWand,
   clipboard,
   checkmark,
+  happy,
+  happyOutline,
+  gitBranch,
+  gitBranchOutline,
+  gitMerge,
+  gitMergeOutline,
+  egg,
+  calendarNumberOutline,
+  homeOutline,
+  idCardOutline,
+  mailOutline,
 } from 'ionicons/icons';
 
 @Component({
@@ -143,6 +154,17 @@ export class AppComponent {
       colorWand,
       clipboard,
       checkmark,
+      happy,
+      happyOutline,
+      gitBranch,
+      gitBranchOutline,
+      gitMerge,
+      gitMergeOutline,
+      egg,
+      calendarNumberOutline,
+      homeOutline,
+      idCardOutline,
+      mailOutline
     });
 
     this.checkToken();

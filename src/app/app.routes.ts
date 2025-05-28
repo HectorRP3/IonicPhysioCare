@@ -28,4 +28,10 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   { path: '**', redirectTo: '/auth/login' },
+
+  {
+    path: 'profile',
+    loadComponent: () => import('./profile/profile/profile.page').then( m => m.ProfilePage)
+  },
+  
 ];
