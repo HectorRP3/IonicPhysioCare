@@ -113,6 +113,7 @@ export class AppComponent {
   menuEnabled = false;
   public appPages = [
     { title: 'Appointments', url: '/appointments', icon: 'pencil' },
+    { title: 'Physios', url: '/physios', icon: 'people' },
     // { title: 'New event', url: '/events/add', icon: 'add' },
     // { title: 'My profile', url: '/profile/me', icon: 'person' },
   ];
@@ -175,41 +176,41 @@ export class AppComponent {
     this.menuEnabled = !!value;
   }
 
-  async initializeApp() {
-    if (this.#platform.is('capacitor')) {
-      //...
+  // async initializeApp() {
+  //   if (this.#platform.is('capacitor')) {
+  //     //...
 
-      const res = await PushNotifications.checkPermissions();
-      if (res.receive !== 'granted') {
-        await PushNotifications.requestPermissions();
-      }
+  //     const res = await PushNotifications.checkPermissions();
+  //     if (res.receive !== 'granted') {
+  //       await PushNotifications.requestPermissions();
+  //     }
 
-      // Show us the notification payload if the app is open on our device
-      PushNotifications.addListener(
-        'pushNotificationReceived',
-        async (notification: PushNotificationSchema) => {
-          const toast = await this.#toast.create({
-            header: notification.title,
-            message: notification.body,
-            duration: 3000,
-          });
-          await toast.present();
-        }
-      );
+  //     // Show us the notification payload if the app is open on our device
+  //     PushNotifications.addListener(
+  //       'pushNotificationReceived',
+  //       async (notification: PushNotificationSchema) => {
+  //         const toast = await this.#toast.create({
+  //           header: notification.title,
+  //           message: notification.body,
+  //           duration: 3000,
+  //         });
+  //         await toast.present();
+  //       }
+  //     );
 
-      // Method called when tapping on a notification
-      PushNotifications.addListener(
-        'pushNotificationActionPerformed',
-        (notification: ActionPerformed) => {
-          if (notification.notification.data.prodId) {
-            this.#nav.navigateRoot([
-              '/products',
-              notification.notification.data.prodId,
-              'comments',
-            ]);
-          }
-        }
-      );
-    }
-  }
+  //     // Method called when tapping on a notification
+  //     PushNotifications.addListener(
+  //       'pushNotificationActionPerformed',
+  //       (notification: ActionPerformed) => {
+  //         if (notification.notification.data.prodId) {
+  //           this.#nav.navigateRoot([
+  //             '/products',
+  //             notification.notification.data.prodId,
+  //             'comments',
+  //           ]);
+  //         }
+  //       }
+  //     );
+  //   }
+  // }
 }
