@@ -1,27 +1,29 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonRefresherContent, IonRefresher } from '@ionic/angular/standalone';
+import { IonIcon, IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonRefresherContent, IonRefresher, IonFabButton, IonFab,
+  IonButtons, IonMenuButton,
+ } from '@ionic/angular/standalone';
 import { Patient } from '../interfaces/patient';
 import { PatientCardComponent } from '../patient-card/patient-card.component';
 import { PatientService } from '../services/patient.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonRefresherContent, IonRefresher, IonList, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, PatientCardComponent]
+  imports: [IonMenuButton, IonButtons, IonIcon, IonFab, IonFabButton, IonRefresherContent, IonRefresher, IonList, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, PatientCardComponent]
 })
-export class HomePage implements OnInit {
+export class HomePage {
   patients = signal<Patient[]>([]);
   #patientService = inject(PatientService);
+  role = '';
+  #router = inject(Router);
+
 
   constructor() { }
-
-  ngOnInit() {
-    this.reloadPatients();
-  }
 
   ionViewWillEnter() {
     this.reloadPatients();
@@ -35,6 +37,12 @@ export class HomePage implements OnInit {
       });
 
     refresher?.complete();
+  }
+
+  createPatient() {
+    this.#router.navigate(['/patients/add'], {
+        //queryParams: { physioId: result.data.physio },
+    });
   }
 
 }

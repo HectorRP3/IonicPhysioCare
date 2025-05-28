@@ -76,6 +76,7 @@ import {
   homeOutline,
   idCardOutline,
   mailOutline,
+  documentTextOutline
 } from 'ionicons/icons';
 
 @Component({
@@ -165,7 +166,8 @@ export class AppComponent {
       calendarNumberOutline,
       homeOutline,
       idCardOutline,
-      mailOutline
+      mailOutline,
+      documentTextOutline
     });
 
     this.checkToken();

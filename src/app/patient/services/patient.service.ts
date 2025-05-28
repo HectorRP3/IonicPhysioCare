@@ -21,7 +21,7 @@ export class PatientService {
     return this.#http
     .get<SinglePatientResponse>(`${this.#patientUrl}/${id}`)
     .pipe(map((r) => {
-      console.log("error de hector:" + r.resultado);
+      console.log("error de servicio:" + r.resultado._id);
       return r.resultado;
     }));
   }
