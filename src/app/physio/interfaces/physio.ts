@@ -7,6 +7,7 @@ export interface PhsyioInsert {
   surname?: String;
   userID?: String;
   password?: String;
+  starts?: number;
 }
 export interface Physio extends PhsyioInsert {
   _id: String;

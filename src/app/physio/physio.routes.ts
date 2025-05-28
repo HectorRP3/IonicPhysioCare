@@ -11,4 +11,11 @@ export const physioRoutes: Routes = [
       import('./physio-form/physio-form.page').then((m) => m.PhysioFormPage),
     canActivate: [roleGuard(['admin'])],
   },
+  {
+    path: ':id',
+    loadComponent: () =>
+      import('./physio-detail/physio-detail.component').then(
+        (m) => m.PhysioDetailComponent
+      ),
+  },
 ];

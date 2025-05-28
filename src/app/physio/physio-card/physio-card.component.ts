@@ -62,6 +62,7 @@ export class PhysioCardComponent {
   #toastCtrl = inject(ToastController);
   deleted = output<void>();
   #router = inject(Router);
+
   async showActionAdmind() {
     const actionSheet = await this.#actionSheetController.create({
       header: 'To do',

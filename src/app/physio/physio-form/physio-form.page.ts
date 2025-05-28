@@ -94,7 +94,6 @@ export class PhysioFormPage {
   passwordControl = this.#fb.control('', {
     validators: [Validators.required],
   });
-  imageBase64: string | null = null;
   physioForm = this.#fb.group({
     name: ['', [Validators.required]],
     surname: ['', [Validators.required]],
@@ -155,8 +154,8 @@ export class PhysioFormPage {
       allowEditing: true,
       resultType: CameraResultType.DataUrl, // Base64 (url encoded)
     });
-    this.imageBase64 = photo.dataUrl as string;
-    console.log('Photo taken:', this.imageBase64);
+    this.imagenBase64 = photo.dataUrl as string;
+    console.log('Photo taken:', this.imagenBase64);
     this.openModal();
   }
 
@@ -168,8 +167,8 @@ export class PhysioFormPage {
       allowEditing: true,
       resultType: CameraResultType.DataUrl, // Base64 (url encoded)
     });
-    this.imageBase64 = photo.dataUrl as string;
-    console.log('Photo taken:', this.imageBase64);
+    this.imagenBase64 = photo.dataUrl as string;
+    console.log('Photo taken:', this.imagenBase64);
     this.openModal();
   }
 
@@ -180,7 +179,7 @@ export class PhysioFormPage {
   async openModal() {
     const modal = await this.#modalCtrl.create({
       component: CropperComponent,
-      componentProps: { imagenBase64: this.imageBase64 },
+      componentProps: { imagenBase64: this.imagenBase64 },
     });
     await modal.present();
     const result = await modal.onDidDismiss();
