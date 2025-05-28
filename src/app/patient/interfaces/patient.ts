@@ -6,6 +6,7 @@ export interface PatientInsert {
     insuranceNumber?: string;
     email?: string;
     userID?: string;
+    avatar?: string;
 }
 export interface Patient extends PatientInsert {
     _id: string;

@@ -22,6 +22,12 @@ export const routes: Routes = [
         (m) => m.appointmentRoutes
       ),
   },
+
+  {
+    path: 'profile',
+    loadChildren: () => import('./profile/profile.routes').then((m) => m.profileRoutes),
+  },
+
   {
     path: '',
     redirectTo: 'auth/login',
@@ -29,9 +35,6 @@ export const routes: Routes = [
   },
   { path: '**', redirectTo: '/auth/login' },
 
-  {
-    path: 'profile',
-    loadComponent: () => import('./profile/profile/profile.page').then( m => m.ProfilePage)
-  },
   
+
 ];
