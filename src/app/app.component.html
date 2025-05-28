@@ -1,6 +1,10 @@
 <ion-app>
   <ion-split-pane contentId="main-content">
-    <ion-menu contentId="main-content" type="overlay" [disabled]="!user()">
+    <ion-menu
+      contentId="main-content"
+      type="overlay"
+      [disabled]="user() == null && !isAdmin()"
+    >
       @if (user()) {
       <ion-item color="tertiary">
         <ion-avatar slot="start" [routerLink]="['/profile/me']">
@@ -14,6 +18,11 @@
           <ion-icon slot="end" name="exit"></ion-icon>
         </ion-button>
       </ion-item>
+      }@else {
+      <ion-button color="light" (click)="logout()">
+        <small>Logout</small>
+        <ion-icon slot="end" name="exit"></ion-icon>
+      </ion-button>
       }
       <ion-content>
         <ion-list>

@@ -41,7 +41,7 @@
     <physio-card
       [physio]="physio"
       [rol]="role"
-      (deleted)="deletePhysio(physio._id.toString())"
+      (deleted)="deletePhysio(physio._id!.toString())"
     ></physio-card>
     }
   </ion-list>

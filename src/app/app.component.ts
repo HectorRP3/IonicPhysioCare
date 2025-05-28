@@ -1,4 +1,4 @@
-import { Component, effect, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { ToastController, NavController } from '@ionic/angular/standalone';
 import { Platform } from '@ionic/angular';
@@ -81,6 +81,7 @@ import {
 import { Patient } from './patient/interfaces/patient';
 import { Physio } from './physio/interfaces/physio';
 import { AuthService } from './auth/services/auth.service';
+import { UserLogin } from './auth/interfaces/user';
 
 @Component({
   selector: 'app-root',
@@ -125,6 +126,12 @@ export class AppComponent {
   #authService = inject(AuthService);
   #platform = inject(Platform);
   #nav = inject(NavController);
+  isAdmin = computed(() => {
+    if (this.#authService.rol() == 'admin') {
+      return true;
+    }
+    return false;
+  });
   #toast = inject(ToastController);
   constructor() {
     addIcons({
