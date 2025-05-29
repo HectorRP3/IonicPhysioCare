@@ -83,6 +83,14 @@ export class AuthService {
     await Preferences.remove({ key: 'fs-iduser' });
     this.rol.set('');
     this.#logged.set(false);
+    // this.#http.get('auth/logout').subscribe({
+    //   next: () => {
+    //     console.log('Logout successful');
+    //   },
+    //   error: (err) => {
+    //     console.error('Error during logout:', err);
+    //   },
+    // });
   }
 
   isLogged(): Observable<boolean> {

@@ -33,14 +33,15 @@ export class LoginPage {
 
   constructor() {
     console.log(this.#platform.is('mobile'));
-    // if (this.#platform.is('mobile')) {
-    //   PushNotifications.register();
-
-    //   // On success, we should be able to receive notifications
-    //   PushNotifications.addListener('registration', (token: Token) => {
-    //     this.firebaseToken = token.value;
-    //   });
-    // }
+    if (this.#platform.is('mobile') || this.#platform.is('capacitor')) {
+      PushNotifications.register();
+      console.log('Registrando notificaciones push...');
+      // On success, we should   be able to receive notifications
+      PushNotifications.addListener('registration', (token: Token) => {
+        this.firebaseToken = token.value;
+      });
+      console.log(this.firebaseToken);
+    }
   }
 
   login() {

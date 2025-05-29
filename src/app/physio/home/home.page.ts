@@ -41,7 +41,6 @@ import { PhysioCardComponent } from '../physio-card/physio-card.component';
   standalone: true,
   imports: [
     FormsModule,
-    IonRouterLink,
     IonHeader,
     IonToolbar,
     IonButtons,
@@ -54,7 +53,6 @@ import { PhysioCardComponent } from '../physio-card/physio-card.component';
     IonFabButton,
     IonIcon,
     IonList,
-    IonButton,
     IonCol,
     IonRow,
     IonGrid,

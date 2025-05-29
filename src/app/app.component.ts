@@ -1,11 +1,12 @@
 import { Component, computed, effect, inject, signal } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { ToastController, NavController } from '@ionic/angular/standalone';
-import { Platform } from '@ionic/angular';
+import { Platform } from '@ionic/angular/standalone';
 import {
   ActionPerformed,
   PushNotificationSchema,
   PushNotifications,
+  Token,
 } from '@capacitor/push-notifications';
 
 import { Preferences } from '@capacitor/preferences';
@@ -83,6 +84,7 @@ import { Patient } from './patient/interfaces/patient';
 import { Physio } from './physio/interfaces/physio';
 import { AuthService } from './auth/services/auth.service';
 import { UserLogin } from './auth/interfaces/user';
+import { SplashScreen } from '@capacitor/splash-screen';
 
 @Component({
   selector: 'app-root',
@@ -105,11 +107,6 @@ import { UserLogin } from './auth/interfaces/user';
     IonAvatar,
     IonImg,
     IonButton,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonListHeader,
-    IonNote,
     IonIcon,
     IonMenuToggle,
     IonItem,
@@ -133,6 +130,7 @@ export class AppComponent {
     }
     return false;
   });
+  firebaseToken: string | null = null;
   #toast = inject(ToastController);
   constructor() {
     addIcons({
@@ -190,6 +188,7 @@ export class AppComponent {
         this.user.set(null);
       }
     });
+    this.initializeApp();
     this.checkToken();
   }
   async logout() {
@@ -202,41 +201,41 @@ export class AppComponent {
     this.menuEnabled = !!value;
   }
 
-  // async initializeApp() {
-  //   if (this.#platform.is('capacitor')) {
-  //     //...
+  async initializeApp() {
+    if (this.#platform.is('mobile') || this.#platform.is('capacitor')) {
+      await this.#platform.ready();
+      SplashScreen.hide();
 
-  //     const res = await PushNotifications.checkPermissions();
-  //     if (res.receive !== 'granted') {
-  //       await PushNotifications.requestPermissions();
-  //     }
+      const res = await PushNotifications.checkPermissions();
+      if (res.receive !== 'granted') {
+        await PushNotifications.requestPermissions();
+      }
 
-  //     // Show us the notification payload if the app is open on our device
-  //     PushNotifications.addListener(
-  //       'pushNotificationReceived',
-  //       async (notification: PushNotificationSchema) => {
-  //         const toast = await this.#toast.create({
-  //           header: notification.title,
-  //           message: notification.body,
-  //           duration: 3000,
-  //         });
-  //         await toast.present();
-  //       }
-  //     );
+      // Show us the notification payload if the app is open on our device
+      PushNotifications.addListener(
+        'pushNotificationReceived',
+        async (notification: PushNotificationSchema) => {
+          const toast = await this.#toast.create({
+            header: notification.title,
+            message: notification.body,
+            duration: 3000,
+          });
+          await toast.present();
+        }
+      );
 
-  //     // Method called when tapping on a notification
-  //     PushNotifications.addListener(
-  //       'pushNotificationActionPerformed',
-  //       (notification: ActionPerformed) => {
-  //         if (notification.notification.data.prodId) {
-  //           this.#nav.navigateRoot([
-  //             '/products',
-  //             notification.notification.data.prodId,
-  //             'comments',
-  //           ]);
-  //         }
-  //       }
-  //     );
-  //   }
-  // }
+      // Method called when tapping on a notification
+      PushNotifications.addListener(
+        'pushNotificationActionPerformed',
+        (notification: ActionPerformed) => {
+          if (notification.notification.data.appId) {
+            this.#nav.navigateRoot([
+              '/appointments',
+              notification.notification.data.appId,
+            ]);
+          }
+        }
+      );
+    }
+  }
 }

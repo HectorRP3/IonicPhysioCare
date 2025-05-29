@@ -42,8 +42,6 @@ import { PhysioSelectionComponent } from 'src/app/shared/modal/physio-selection/
   standalone: true,
   imports: [
     FormsModule,
-    RouterLink,
-    IonRouterLink,
     IonHeader,
     IonToolbar,
     IonButtons,
