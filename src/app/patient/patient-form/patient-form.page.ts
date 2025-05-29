@@ -26,7 +26,6 @@ import {
   IonDatetime,
   ModalController,
   IonImg,
-  ModalController
 } from '@ionic/angular/standalone';
 import { PatientService } from '../services/patient.service';
 import { ValueEqualsDirective } from 'src/app/shared/directives/value-equals.directive';
