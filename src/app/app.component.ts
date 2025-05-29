@@ -78,6 +78,7 @@ import {
   mailOutline,
   star,
   documentTextOutline,
+  medkitOutline
 } from 'ionicons/icons';
 import { Patient } from './patient/interfaces/patient';
 import { Physio } from './physio/interfaces/physio';
@@ -182,6 +183,7 @@ export class AppComponent {
       mailOutline,
       documentTextOutline,
       star,
+      medkitOutline,
     });
     effect(() => {
       if (this.#authService.getLogged()) {

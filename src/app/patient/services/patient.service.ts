@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Patient, PatientInsert } from '../interfaces/patient';
+import { Patient, PatientInsert, Record, RecordResponse } from '../interfaces/patient';
 import { map, Observable } from 'rxjs';
 import { PatientsResponse, SinglePatientResponse } from '../interfaces/responses';
 
@@ -41,6 +41,15 @@ export class PatientService {
       return this.#http
         .delete<SinglePatientResponse>(`${this.#patientUrl}/${id}`)
         .pipe(map((r) => r));
+  }
+
+  getRecordById(id: string): Observable<Record> {
+  return this.#http
+    .get<RecordResponse>(`records/patient/${id}`)
+    .pipe(map((r) => {
+      console.log("Respuesta de record:" + r.resultado._id);
+      return r.resultado;
+    }));
   }
 
 }
