@@ -24,7 +24,6 @@ import {
   IonInput,
   ToastController,
   IonDatetime,
-  ModalController,
   IonImg,
   ModalController
 } from '@ionic/angular/standalone';

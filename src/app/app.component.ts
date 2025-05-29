@@ -131,6 +131,16 @@ export class AppComponent {
     }
     return false;
   });
+
+
+  isPhysio = computed(() => {
+    if (this.#authService.rol() == 'physio') {
+      return true;
+    }
+    return false;
+  });
+
+  
   firebaseToken: string | null = null;
   #toast = inject(ToastController);
   constructor() {
