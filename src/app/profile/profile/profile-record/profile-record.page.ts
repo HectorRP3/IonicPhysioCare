@@ -67,7 +67,11 @@ export class ProfileRecordPage {
   appointments = signal<Appointment[]>([]);
 
   async reloadAppointments(refresher?: IonRefresher) {
-    this.appointments.set(this.recordResource.value()?.appointments ?? []);
+    const today = new Date();
+    const sortedAppointments = (this.recordResource.value()?.appointments ?? [])
+      .filter(app => !!app.date && new Date(app.date) < today)
+      .sort((a, b) => new Date(b.date ?? 0).getTime() - new Date(a.date ?? 0).getTime());
+    this.appointments.set(sortedAppointments);
     refresher?.complete();
   } 
 
