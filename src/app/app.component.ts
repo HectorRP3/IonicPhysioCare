@@ -118,10 +118,10 @@ import { UserLogin } from './auth/interfaces/user';
 export class AppComponent {
   menuEnabled = false;
   public appPages = [
+    //{ title: 'My profile', url: '/profile', icon: 'person' },
     { title: 'Appointments', url: '/appointments', icon: 'pencil' },
     { title: 'Physios', url: '/physios', icon: 'people' },
     { title: 'Patients', url: '/patients', icon: 'people' },
-    // { title: 'My profile', url: '/profile/me', icon: 'person' },
   ];
   user = signal<Patient | Physio | null>(null);
   #authService = inject(AuthService);
