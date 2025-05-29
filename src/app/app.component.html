@@ -6,10 +6,12 @@
       [disabled]="user() == null && !isAdmin()"
     >
       @if (user() && isPhysio()) {
-        <ion-item color="tertiary">
-        <ion-avatar slot="start" 
-              routerDirection="forward"
-              [routerLink]="['/physios', user()!._id]">
+      <ion-item color="primary">
+        <ion-avatar
+          slot="start"
+          routerDirection="forward"
+          [routerLink]="['/physios', user()!._id]"
+        >
           <ion-img [src]="user()!.avatar"></ion-img>
         </ion-avatar>
         <ion-label>
@@ -20,9 +22,8 @@
           <ion-icon slot="end" name="exit"></ion-icon>
         </ion-button>
       </ion-item>
-      }
-      @else if (user()) {
-      <ion-item color="tertiary">
+      } @else if (user()) {
+      <ion-item color="primary">
         <ion-avatar slot="start" [routerLink]="['/profile', user()!._id]">
           <ion-img [src]="user()!.avatar"></ion-img>
         </ion-avatar>
