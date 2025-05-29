@@ -46,17 +46,14 @@ import { Preferences } from '@capacitor/preferences';
     IonItem,
     IonLabel,
     DatePipe,
-    IonAvatar,
     IonChip,
     IonButton,
     IonGrid,
     IonCol,
     IonRow,
-    IonCardSubtitle,
     IonList,
     IonImg,
     DatePipe,
-    IonThumbnail,
   ],
 })
 export class PatientCardComponent {

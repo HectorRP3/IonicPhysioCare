@@ -41,16 +41,13 @@ import { PhysioService } from '../services/physio.service';
     IonIcon,
     IonItem,
     IonLabel,
-    DatePipe,
-    IonAvatar,
+
     IonChip,
-    IonBadge,
     IonImg,
     IonButton,
     IonGrid,
     IonCol,
     IonRow,
-    IonCardSubtitle,
     IonList,
   ],
 })
