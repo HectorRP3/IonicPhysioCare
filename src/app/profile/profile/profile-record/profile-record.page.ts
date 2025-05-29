@@ -19,19 +19,24 @@ import { IonContent, IonHeader, IonTitle, IonToolbar,
   IonCol,
   IonRow,
   IonCardSubtitle,
-  IonList, IonRefresher, IonRefresherContent } from '@ionic/angular/standalone';
+  IonList, IonRefresher, IonRefresherContent, IonFabButton, IonFab, ModalController } from '@ionic/angular/standalone';
 import { ProfilePage } from '../profile.page';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { PatientService } from 'src/app/patient/services/patient.service';
 import { Appointment } from 'src/app/appointments/interfaces/appointment';
 import { AppointmentCardComponent } from 'src/app/appointments/appointment-card/appointment-card.component';
+import { map } from 'rxjs';
+import { PhysioSelectionComponent } from 'src/app/shared/modal/physio-selection/physio-selection.component';
+import { Router } from '@angular/router';
+import { RecordModalComponent } from 'src/app/shared/modal/record-modal/record-modal.component';
+import { Record, RecordInsert } from 'src/app/patient/interfaces/patient';
 
 @Component({
   selector: 'profile-record',
   templateUrl: './profile-record.page.html',
   styleUrls: ['./profile-record.page.scss'],
   standalone: true,
-  imports: [IonRefresherContent, IonRefresher, AppointmentCardComponent, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon, IonRouterLink, IonItem, IonLabel, IonAvatar, IonChip, IonBadge, IonImg, IonButton, IonGrid, IonCol, IonRow, IonCardSubtitle, IonList]
+  imports: [IonFab, IonFabButton, IonRefresherContent, IonRefresher, AppointmentCardComponent, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon, IonRouterLink, IonItem, IonLabel, IonAvatar, IonChip, IonBadge, IonImg, IonButton, IonGrid, IonCol, IonRow, IonCardSubtitle, IonList]
 })
 export class ProfileRecordPage {
 
@@ -39,10 +44,18 @@ export class ProfileRecordPage {
   #patientService = inject(PatientService);
   role = ''; // para logica de borrado y edición de citas
 
+  #modalCtrl = inject(ModalController);
+  #router = inject(Router);
+
   id = inject(ProfilePage).id;
   recordResource = rxResource({
       request: () => this.id(),
-      loader: ({ request: id }) => this.#patientService.getRecordById(id!)
+      loader: ({ request: id }) => this.#patientService.getRecordById(id!).pipe(
+        map((record) => {
+          this.appointments.set(record.appointments ?? []);
+          return record;
+        })
+      )
   });
   record = computed(() => this.recordResource.value());
 
@@ -58,8 +71,42 @@ export class ProfileRecordPage {
     refresher?.complete();
   } 
 
-  constructor() { 
-    this.reloadAppointments();
+
+
+  async openModal() {
+      const modal = await this.#modalCtrl.create({
+        component: RecordModalComponent,
+        componentProps: { medicalRecord: this.record()?.medicalRecord },
+      });
+      await modal.present();
+      const result = await modal.onDidDismiss();
+      if (result.data && result.data.medicalRecord) {
+
+        console.log('Medical selected:', result.data.medicalRecord);
+
+        const updatedRecord: RecordInsert = {
+          _id: this.record()!._id,
+          patient: this.record()!.patient._id,
+          medicalRecord: result.data.medicalRecord,
+          appointments: this.record()?.appointments ?? []
+        };
+
+        this.#patientService.updateRecord(updatedRecord).subscribe({
+          next: (record) => {
+            console.log('Record updated:', record);
+            this.recordResource.reload();
+          },
+          error: (err) => {
+            console.error('Error updating record:', err);
+          }
+        });
+
+        // this.#router.navigate(['/appointments/add'], {
+        //   queryParams: { physioId: result.data.physio },
+        // });
+
+      }
   }
 
+  
 }

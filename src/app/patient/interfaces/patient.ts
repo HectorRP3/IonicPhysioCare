@@ -26,6 +26,13 @@ export interface Record {
   appointments: Appointment[];
 }
 
+export interface RecordInsert {
+  _id: string;
+  patient: string;
+  medicalRecord: string;
+  appointments: Appointment[];
+}
+
 export interface RecordResponse {
   resultado: Record;
 }
