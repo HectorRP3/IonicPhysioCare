@@ -5,7 +5,23 @@
       type="overlay"
       [disabled]="user() == null && !isAdmin()"
     >
-      @if (user()) {
+      @if (user() && isPhysio()) {
+        <ion-item color="tertiary">
+        <ion-avatar slot="start" 
+              routerDirection="forward"
+              [routerLink]="['/physios', user()!._id]">
+          <ion-img [src]="user()!.avatar"></ion-img>
+        </ion-avatar>
+        <ion-label>
+          <h3>{{ user()!.name }}</h3>
+        </ion-label>
+        <ion-button color="light" (click)="logout()">
+          <small>Logout</small>
+          <ion-icon slot="end" name="exit"></ion-icon>
+        </ion-button>
+      </ion-item>
+      }
+      @else if (user()) {
       <ion-item color="tertiary">
         <ion-avatar slot="start" [routerLink]="['/profile', user()!._id]">
           <ion-img [src]="user()!.avatar"></ion-img>

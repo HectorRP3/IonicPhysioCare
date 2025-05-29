@@ -24,7 +24,6 @@ import {
   IonInput,
   ToastController,
   IonDatetime,
-  ModalController,
   IonImg,
 } from '@ionic/angular/standalone';
 import { PatientService } from '../services/patient.service';
