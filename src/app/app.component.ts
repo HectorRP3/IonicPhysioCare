@@ -78,6 +78,7 @@ import {
   mailOutline,
   star,
   documentTextOutline,
+  medkitOutline
 } from 'ionicons/icons';
 import { Patient } from './patient/interfaces/patient';
 import { Physio } from './physio/interfaces/physio';
@@ -118,10 +119,10 @@ import { UserLogin } from './auth/interfaces/user';
 export class AppComponent {
   menuEnabled = false;
   public appPages = [
+    //{ title: 'My profile', url: '/profile', icon: 'person' },
     { title: 'Appointments', url: '/appointments', icon: 'pencil' },
     { title: 'Physios', url: '/physios', icon: 'people' },
     { title: 'Patients', url: '/patients', icon: 'people' },
-    // { title: 'My profile', url: '/profile/me', icon: 'person' },
   ];
   user = signal<Patient | Physio | null>(null);
   #authService = inject(AuthService);
@@ -182,6 +183,7 @@ export class AppComponent {
       mailOutline,
       documentTextOutline,
       star,
+      medkitOutline,
     });
     effect(() => {
       if (this.#authService.getLogged()) {

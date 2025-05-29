@@ -1,4 +1,4 @@
-import { afterNextRender, Component, computed, inject, input, numberAttribute, OnInit } from '@angular/core';
+import { afterNextRender, Component, computed, effect, inject, input, numberAttribute, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, ModalController,
@@ -22,10 +22,13 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, ModalController,
   IonList, 
   IonTabs,
   IonTabButton,
-  IonTabBar
+  IonTabBar,
+  NavController,
  } from '@ionic/angular/standalone';
 import { PatientService } from 'src/app/patient/services/patient.service';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { Preferences } from '@capacitor/preferences';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({
   selector: 'profile',
@@ -36,6 +39,8 @@ import { rxResource } from '@angular/core/rxjs-interop';
 })
 export class ProfilePage {
   #patientService = inject(PatientService);
+  #authService = inject(AuthService);
+  #navCtrl = inject(NavController);
 
   id = input.required<string>();
   patientResource = rxResource({
@@ -43,5 +48,30 @@ export class ProfilePage {
     loader: ({request: id}) => this.#patientService.getPatientById(id!),
   });
   patient = computed(() => this.patientResource.value());
+
+  //isPhysio = computed(() => this.#authService.rol() === 'physio');          mirar para el caso de perfil Physio
+
+  //TODO: para redirigir desde el menu con `My profile` tenemos q conseguir el id del usuario logueado y que segun el cargue el profile.page:
+
+  // IonWillEnter() {
+  //   effect(async () => {
+  //         const { value: token } = await Preferences.get({ key: 'fs-iduser' });
+          
+  //         console.log('Token guardado en home de patient:', token);
+
+  //         if (!token) {
+  //           // en caso de que no haya token, redirige al login
+  //           this.#navCtrl.navigateRoot(['/auth/login']);
+  //           return;
+  //         }
+
+  //         this.id = await this.#authService.decodeToken(token).id;
+
+  //         console.log('Id decodificado en profilePage:', this.id);
+  //     });
+
+  //   console.log('ProfilePage initialized with id:', this.id());
+  // }
+  
 
 }
