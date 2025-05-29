@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Patient, PatientInsert, Record, RecordResponse } from '../interfaces/patient';
+import { Patient, PatientInsert, Record, RecordInsert, RecordResponse } from '../interfaces/patient';
 import { map, Observable } from 'rxjs';
 import { PatientsResponse, SinglePatientResponse } from '../interfaces/responses';
 
@@ -50,6 +50,12 @@ export class PatientService {
       console.log("Respuesta de record:" + r.resultado._id);
       return r.resultado;
     }));
+  }
+
+  updateRecord(record: RecordInsert): Observable<RecordInsert> {
+    return this.#http
+      .put<RecordInsert>(`records/${record._id}`, record)
+      .pipe(map((r) => r));
   }
 
 }
