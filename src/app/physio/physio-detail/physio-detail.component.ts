@@ -57,9 +57,6 @@ import { FormsModule } from '@angular/forms';
     IonButtons,
     IonBackButton,
     IonTitle,
-    IonTabs,
-    IonTabBar,
-    IonTabButton,
     IonIcon,
     IonLabel,
     PhysioCardComponent,
@@ -68,10 +65,7 @@ import { FormsModule } from '@angular/forms';
     IonList,
     IonItem,
     IonButton,
-    IonImg,
-    IonGrid,
-    IonRow,
-    CropperComponent,
+
     IonInput,
   ],
 })

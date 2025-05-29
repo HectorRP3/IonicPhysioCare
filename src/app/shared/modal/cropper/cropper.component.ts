@@ -30,13 +30,7 @@ import {
     IonButton,
     IonIcon,
     IonContent,
-    IonList,
-    IonListHeader,
-    IonRadioGroup,
     IonLabel,
-    IonItem,
-    IonRadio,
-    IonSpinner,
     ImageCropperComponent,
   ],
 })

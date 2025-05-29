@@ -1,101 +1,111 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-  </ion-toolbar>
+  <ion-toolbar> </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-@if (patient()) {
+  @if (patient()) {
 
-<ion-card>
-  <ion-card-header>
-    @if (rol() == "admin"){
-        <ion-button
-          shape="round"
-          fill="outline"
-          color="warning"
-          (click)="showActionAdmin()"
-          ><ion-icon name="ellipsis-horizontal"></ion-icon
-        ></ion-button>
-    }
-  </ion-card-header>
-<ion-card-content>
-  <ion-grid>
-    <ion-row>
-      <ion-col class="lista" size="8">
+  <ion-card>
+    <ion-card-header>
+      @if (rol() == "admin"){
+      <ion-button
+        shape="round"
+        fill="outline"
+        color="warning"
+        (click)="showActionAdmin()"
+        ><ion-icon name="ellipsis-horizontal"></ion-icon
+      ></ion-button>
+      }
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col class="lista" size="8">
+            <ion-list class="ion-no-padding">
+              <ion-item>
+                <ion-icon name="git-branch-outline" slot="start"></ion-icon>
+                <ion-label
+                  ><strong>Name:</strong> {{ patient()!.name ?? "Jane"
+                  }}</ion-label
+                >
+              </ion-item>
 
-        <ion-list class="ion-no-padding">
+              <ion-item>
+                <ion-icon name="git-merge-outline" slot="start"></ion-icon>
+                <ion-label
+                  ><strong>Surname:</strong> {{ patient()!.surname ?? "Doe"
+                  }}</ion-label
+                >
+              </ion-item>
 
-        <ion-item>
-          <ion-icon name="git-branch-outline" slot="start"></ion-icon>
-          <ion-label
-            ><strong>Name:</strong>
-            {{ patient()!.name ?? "Jane" }}</ion-label
-          >
-        </ion-item>
+              <ion-item>
+                <ion-icon
+                  name="calendar-number-outline"
+                  slot="start"
+                ></ion-icon>
+                <ion-label
+                  ><strong>BirthDate:</strong>
+                  {{ patient()!.birthDate ? (patient()!.birthDate |
+                  date:'dd/MM/yyyy') : 'Not specified' }}
+                </ion-label>
+              </ion-item>
 
-        <ion-item>
-          <ion-icon name="git-merge-outline" slot="start"></ion-icon>
-          <ion-label
-            ><strong>Surname:</strong>
-            {{ patient()!.surname ?? "Doe" }}</ion-label
-          >
-        </ion-item>
+              <ion-item>
+                <ion-icon name="home-outline" slot="start"></ion-icon>
+                <ion-label
+                  ><strong>Address:</strong> {{ patient()!.address ??
+                  "Notspecified" }}</ion-label
+                >
+              </ion-item>
 
-        <ion-item>
-          <ion-icon name="calendar-number-outline" slot="start"></ion-icon>
-          <ion-label
-            ><strong>BirthDate:</strong>
-            {{ patient()!.birthDate ? (patient()!.birthDate  | date:'dd/MM/yyyy') : 'Not specified' }}
-          </ion-label>
-        </ion-item>
+              <ion-item>
+                <ion-icon name="id-card-outline" slot="start"></ion-icon>
+                <ion-label
+                  ><strong>Insurance Number:</strong> {{
+                  patient()!.insuranceNumber ?? "Not specified" }}</ion-label
+                >
+              </ion-item>
 
-        <ion-item>
-          <ion-icon name="home-outline" slot="start"></ion-icon>
-          <ion-label
-            ><strong>Address:</strong>
-            {{ patient()!.address ?? "Not specified" }}</ion-label
-          >
-        </ion-item>
+              <ion-item>
+                <ion-icon name="mail-outline" slot="start"></ion-icon>
+                <ion-label
+                  ><strong>Email:</strong> {{ patient()!.email ?? "Notspecified"
+                  }}</ion-label
+                >
+              </ion-item>
+            </ion-list>
+          </ion-col>
 
-        <ion-item>
-          <ion-icon name="id-card-outline" slot="start"></ion-icon>
-          <ion-label
-            ><strong>Insurance Number:</strong>
-            {{ patient()!.insuranceNumber ?? "Not specified" }}</ion-label
-          >
-        </ion-item>
-
-        <ion-item>
-          <ion-icon name="mail-outline" slot="start"></ion-icon>
-          <ion-label
-            ><strong>Email:</strong>
-            {{ patient()!.email ?? "Not specified" }}</ion-label
-          >
-        </ion-item>
-
-      </ion-list>
-
-      </ion-col>
-
-      <ion-col size="4">
-          <ion-img
-            [src]="patient()!.avatar"
-            [alt]="patient()!.name"
-            style="width: 100%"
-          ></ion-img>
-      </ion-col>
-
-    </ion-row>
-  </ion-grid>
-</ion-card-content>
-</ion-card>
-} @else {
+          <ion-col size="4">
+            <ion-img
+              [src]="patient()!.avatar"
+              [alt]="patient()!.name"
+              style="width: 100%"
+            ></ion-img>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+  @if(isMyPatient()){
+  <ion-list>
+    <ion-item>
+      <ion-label position="inset">Avatar</ion-label>
+      <ion-button color="secondary" (click)="takePhoto()">
+        <ion-icon name="camera" slot="start"></ion-icon>
+        Camera
+      </ion-button>
+      <ion-button color="tertiary" (click)="pickFromGallery()">
+        <ion-icon name="images" slot="start"></ion-icon>
+        Gallery
+      </ion-button>
+    </ion-item>
+  </ion-list>
+  } } @else {
   <ion-card>
     <ion-card-content>
       <p>Patient is loading.</p>
     </ion-card-content>
   </ion-card>
-}
-
-
+  }
 </ion-content>
