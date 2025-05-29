@@ -7,7 +7,7 @@
     >
       @if (user()) {
       <ion-item color="tertiary">
-        <ion-avatar slot="start" [routerLink]="['/profile/me']">
+        <ion-avatar slot="start" [routerLink]="['/profile', user()!._id]">
           <ion-img [src]="user()!.avatar"></ion-img>
         </ion-avatar>
         <ion-label>

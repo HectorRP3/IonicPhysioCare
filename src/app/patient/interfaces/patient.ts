@@ -1,3 +1,6 @@
+import { A } from "ol/renderer/webgl/FlowLayer";
+import { Appointment } from "src/app/appointments/interfaces/appointment";
+
 export interface PatientInsert {
   avatar?: string;
   name?: string;
@@ -14,4 +17,15 @@ export interface PatientInsert {
 
 export interface Patient extends PatientInsert {
   _id: string;
+}
+
+export interface Record {
+  _id: string;
+  patient: Patient;
+  medicalRecord: string;
+  appointments: Appointment[];
+}
+
+export interface RecordResponse {
+  resultado: Record;
 }
