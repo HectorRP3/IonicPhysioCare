@@ -1,7 +1,21 @@
-import { afterNextRender, Component, computed, effect, inject, input, numberAttribute, OnInit } from '@angular/core';
+import {
+  afterNextRender,
+  Component,
+  computed,
+  effect,
+  inject,
+  input,
+  numberAttribute,
+  OnInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, ModalController,
+import {
+  IonContent,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
+  ModalController,
   IonCard,
   IonCardTitle,
   IonCardContent,
@@ -19,12 +33,12 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, ModalController,
   IonCol,
   IonRow,
   IonCardSubtitle,
-  IonList, 
+  IonList,
   IonTabs,
   IonTabButton,
   IonTabBar,
-  NavController,
- } from '@ionic/angular/standalone';
+} from '@ionic/angular/standalone';
+import { NavController } from '@ionic/angular';
 import { PatientService } from 'src/app/patient/services/patient.service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { Preferences } from '@capacitor/preferences';
@@ -35,7 +49,35 @@ import { AuthService } from 'src/app/auth/services/auth.service';
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
   standalone: true,
-  imports: [IonTabs, IonTabBar, IonTabButton, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon, IonRouterLink, IonItem, IonLabel, IonAvatar, IonChip, IonBadge, IonImg, IonButton, IonGrid, IonCol, IonRow, IonCardSubtitle, IonList],
+  imports: [
+    IonTabs,
+    IonTabBar,
+    IonTabButton,
+    IonContent,
+    IonHeader,
+    IonTitle,
+    IonToolbar,
+    CommonModule,
+    FormsModule,
+    IonCard,
+    IonCardContent,
+    IonCardHeader,
+    IonCardTitle,
+    IonIcon,
+    IonRouterLink,
+    IonItem,
+    IonLabel,
+    IonAvatar,
+    IonChip,
+    IonBadge,
+    IonImg,
+    IonButton,
+    IonGrid,
+    IonCol,
+    IonRow,
+    IonCardSubtitle,
+    IonList,
+  ],
 })
 export class ProfilePage {
   #patientService = inject(PatientService);
@@ -45,7 +87,7 @@ export class ProfilePage {
   id = input.required<string>();
   patientResource = rxResource({
     request: () => this.id(),
-    loader: ({request: id}) => this.#patientService.getPatientById(id!),
+    loader: ({ request: id }) => this.#patientService.getPatientById(id!),
   });
   patient = computed(() => this.patientResource.value());
 
@@ -56,7 +98,7 @@ export class ProfilePage {
   // IonWillEnter() {
   //   effect(async () => {
   //         const { value: token } = await Preferences.get({ key: 'fs-iduser' });
-          
+
   //         console.log('Token guardado en home de patient:', token);
 
   //         if (!token) {
@@ -72,6 +114,4 @@ export class ProfilePage {
 
   //   console.log('ProfilePage initialized with id:', this.id());
   // }
-  
-
 }
